@@ -1,0 +1,4 @@
+{:organization "funcool"
+ :projects #{"httpurr" "urania"}
+ :languages #{"Clojure"}
+ :token "0ea220b5c8de1be060c132e24771ed74537821be"}

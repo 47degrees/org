@@ -6,14 +6,17 @@
 
   :min-lein-version "2.7.1"
 
-  :dependencies [[org.clojure/clojure "1.9.0-alpha13"]
+  :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.229"]
                  [org.clojure/test.check "0.9.0"]
+                 [org.clojure/data.json "0.2.6"]
                  [rum "0.10.5"]
+                 [aleph "0.4.1"]
                  [funcool/httpurr "0.6.1"]
                  [funcool/cuerdas "0.8.0"]
                  [funcool/urania "0.1.0"]
-                 [funcool/hodgepodge "0.1.4"]]
+                 [funcool/hodgepodge "0.1.4"]
+                 [funcool/promesa "1.5.0"]]
 
   :plugins [[lein-figwheel "0.5.8"]
             [hiccup-bridge "1.0.1"]
@@ -30,14 +33,15 @@
                 ;; the presence of a :figwheel configuration here
                 ;; will cause figwheel to inject the figwheel client
                 ;; into your build
-                :figwheel {:on-jsload "org.core/on-js-reload"
+                :figwheel {;;:on-jsload "org.core/on-js-reload"
                            ;; :open-urls will pop open your application
                            ;; in the default browser once Figwheel has
                            ;; started and complied your application.
                            ;; Comment this out once it no longer serves you.
-                           :open-urls ["http://localhost:3449/index.html"]}
+                           ;;:open-urls ["http://localhost:3449/index.html"]
+                           }
 
-                :compiler {:main org.core
+                :compiler {:main org.app
                            :asset-path "js/compiled/out"
                            :output-to "resources/public/js/compiled/org.js"
                            :output-dir "resources/public/js/compiled/out"
@@ -51,7 +55,7 @@
                {:id "min"
                 :source-paths ["src"]
                 :compiler {:output-to "resources/public/js/compiled/org.js"
-                           :main org.core
+                           :main org.app
                            :optimizations :advanced
                            :pretty-print false}}]}
 
