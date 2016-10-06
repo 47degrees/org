@@ -1,0 +1,48 @@
+// STATS
+//------------------------------------------------
+//------------------------------------------------
+.github-stats {
+	@include span-columns(8);
+	@include shift(2);
+	@include bp(medium) {
+		@include span-columns(12);
+		@include shift(0);
+	}
+	ul {
+		@include display(flex);
+		@include flex-wrap(wrap);
+		@include flex-direction(row);
+		@include justify-content(center);
+		@include align-items(center);
+		li {
+			@include flex-grow(1);
+			text-align: center;
+			border-right: 1px solid rgba($white, 0.25);
+			span {
+				display: block;
+				span {
+					padding: 4px 0;
+					color: $brand-primary;
+				}
+			}
+			span:nth-child(1) {
+				font-size: 30px;
+			}
+			span:nth-child(2) {
+				font-size: 18px;
+			}
+			@include bp(large) {
+		
+				span:nth-child(1) {
+					font-size: 20px;
+				}
+				span:nth-child(2) {
+					font-size: 14px;
+				}
+			}
+		}
+		li:last-child {
+			border: none;
+		}
+	}
+}

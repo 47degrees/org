@@ -1,15 +1,68 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="css/style.css" rel="stylesheet" type="text/css">
-  </head>
-  <body>
-    <div id="app">
-      <h2>Figwheel template</h2>
-      <p>Checkout your developer console.</p>
-    </div>
-    <script src="js/compiled/org.js" type="text/javascript"></script>
-  </body>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css">
+	<link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<nav class="sliding-panel-content"></nav>
+	<div class="sliding-panel-fade-screen"></div>
+	<header id="site-header">
+		<div class="image"></div>
+		
+		<div class="wrapper">
+			<nav>
+				<div class="brand">
+					<img src="img/nav-brand.png" alt="">
+				</div>
+				<div class="menu">
+					<span class="octicon octicon-three-bars sliding-panel-button"></span>
+					<ul>
+						<li>
+							<a href="#">How to</a>
+						</li>
+						<li>
+							<a href="#">Blog</a>
+						</li>
+						<li>
+							<a href="#">Contact</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<h1>Open Source Projects by 47 Degrees</h1>
+			<div class="github-stats">
+				<ul>
+					<li class="contributors">
+						<span>324</span>
+						<span><span class="octicon octicon-person"></span>contributors</span>
+					</li>
+					<li class="stars">
+						<span>324</span>
+						<span><span class="octicon octicon-star"></span>stars</span>
+					</li>
+					<li class="repositories">
+						<span>324</span>
+						<span><span class="octicon octicon-repo"></span>repositories</span>
+					</li>
+					<li class="languages">
+						<span>324</span>
+						<span><span class="octicon octicon-code"></span>languages</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</header>
+	<main id="site-main">
+	</main>
+	<footer id="site-footer"></footer>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="js/compiled/org.js" type="text/javascript"></script>
+	<script src="js/functions.js" type="text/javascript"></script>
+</body>
+
 </html>

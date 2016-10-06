@@ -1,0 +1,60 @@
+// HEADER
+//------------------------------------------------
+//------------------------------------------------
+#site-header {
+	padding: 40px 0 150px 0;
+	background: linear-gradient(0deg, rgba($gray-darker, 0.88), rgba($gray-darker, 0.88)), url('../img/header-background.jpg') no-repeat center center;
+	@include image-size;
+	color: $white;
+	@include bp(large) {
+		padding: 20px 0 60px 0;
+	}
+	nav {
+		@include display(flex);
+		@include flex-direction(row);
+		@include justify-content(space-between);
+		@include align-items(center);
+		.brand {
+			img {
+				width: 50%;
+				height: auto;
+				display: block;
+			}
+		}
+		.menu {
+			span {
+				font-size: 22px;
+				display: none;
+				cursor: pointer;
+			}
+			ul {
+				li {
+					display: inline-block;
+					margin-right: 30px;
+					a {
+						@include links($white, $white, rgba($white, 0.7), rgba($white, 0.7), rgba($white, 0.7), color $base-duration $base-timing);
+					}
+				}
+				li:last-child {
+					margin-right: 0;
+				}
+			}
+			@include bp(large) {
+				ul {
+					display: none;
+				}
+				span {
+					display: block;
+				}
+			}
+		}
+	}
+	h1 {
+		text-align: center;
+		margin: 80px 0 50px 0;
+		@include bp(large) {
+			font-size: ($h1-font-size / 2);
+			margin: 30px 0;
+		}
+	}
+}

@@ -1,0 +1,48 @@
+// CONSTANT
+//------------------------------------------------
+//------------------------------------------------
+
+// Color
+$gray-darker: #1E2735;
+$gray-dark: #555B65;
+$gray: #999DA3;
+$gray-light: #DFE1E3;
+$gray-lighter: #F4F5F6;
+$white: #ffffff;
+
+// Font Colors
+$base-font-color: $gray-dark;
+$headings-color: $gray-darker;
+
+// Background Color
+$base-background-color: $gray-lighter;
+
+// Link Colors
+$base-link-color: $brand-primary;
+$hover-link-color: darken($base-link-color, 20);
+
+// Typography
+$base-font-size: 15px;
+$h1-font-size: ($base-font-size * 4);
+$h2-font-size: ($base-font-size * 1.2);
+
+// Line height
+$base-line-height: 1.6;
+$headings-line-height: 1.25;
+
+// Other Sizes
+$base-border-radius: 3px;
+
+// Border
+$base-border-color: $gray-light;
+$base-border: 1px solid $base-border-color;
+
+// Breakpoints
+$bp-small: 480px;
+$bp-medium: 768px;
+$bp-large: 992px;
+$bp-xlarge: 1200px;
+
+// Animations
+$base-duration: 250ms;
+$base-timing: ease;
