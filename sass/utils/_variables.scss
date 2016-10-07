@@ -6,7 +6,7 @@
 $brand-primary: #F44336 !default;
 
 // Typography
-$font-google: 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Poppins:300,400' !default;
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Poppins:300,400);
 $base-font-family: 'Open Sans', sans-serif !default;
 $headings-font-family: 'Poppins', sans-serif !default;
 
