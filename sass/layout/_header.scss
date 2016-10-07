@@ -19,6 +19,10 @@
 				width: 50%;
 				height: auto;
 				display: block;
+				@include bp(large) {
+					width: 40%;
+					height: auto;
+				}
 			}
 		}
 		.panel-button {
@@ -27,42 +31,40 @@
 				font-size: 22px;
 				cursor: pointer;
 			}
+			@include bp(large) {
+				display: block;
+			}
 		}
 		.menu {
 			ul {
+				@include bp(large) {
+					padding: 20px;
+				}
 				li {
+					text-transform: uppercase;
 					display: inline-block;
 					margin-right: 30px;
+					font-size: 13px;
+					@include bp(large) {
+						display: block;
+						margin: 0;
+						border-bottom: 1px solid rgba($white, 0.15);
+					}
 					a {
 						@include links($white,
 						$white,
-						rgba($white, 0.7),
-						rgba($white, 0.7),
-						rgba($white, 0.7),
+						rgba($white, 0.6),
+						rgba($white, 0.6),
+						rgba($white, 0.6),
 						color $base-duration $base-timing);
+						@include bp(large) {
+							display: block;
+							padding: 10px 0;
+						}
 					}
 				}
 				li:last-child {
 					margin-right: 0;
-				}
-			}
-		}
-		@include bp(large) {
-			.panel-button {
-				display: block;
-			}
-			.menu {
-				ul {
-					padding: 20px;
-					li {
-						display: block;
-						margin: 0;
-						border-bottom: 1px solid rgba($white, 0.15);
-						a {
-							display: block;
-							padding: 5px 0;
-						}
-					}
 				}
 			}
 		}
