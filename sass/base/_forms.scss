@@ -1,3 +1,24 @@
 // FORM
 //------------------------------------------------
 //------------------------------------------------
+input {
+	display: block;
+	font-family: $base-font-family;
+	font-size: $base-font-size;
+	appearance: none;
+	background: $white;
+	border: $base-border;
+	border-radius: $base-border-radius;
+	//box-shadow: $form-box-shadow;
+	box-sizing: border-box;
+	padding: 11px;
+	transition: border-color $base-duration $base-timing;
+	width: 100%;
+	&:hover {
+		border-color: shade($base-border-color, 10%);
+	}
+	&:focus {
+		border-color: shade($base-border-color, 20%);
+		outline: none;
+	}
+}
