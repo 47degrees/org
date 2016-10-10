@@ -24,6 +24,7 @@
            owner
            html_url
            languages_url
+           contributors_url
            stargazers_count
            watchers_count
            forks_count]}]
@@ -35,7 +36,8 @@
    :stars stargazers_count
    :watchers watchers_count
    :forks forks_count
-   :languages-url languages_url})
+   :languages-url languages_url
+   :contributors-url contributors_url})
 
 (defn parse-repos-response
   [resp]
@@ -62,10 +64,6 @@
                  (parse-repos-response resp)
                  (p/rejected (ex-info "Unsuccessful request" {:response resp})))))))
 
-(defn repo-langs-url
-  [repo]
-  (get repo :languages-url))
-
 (defn parse-languages-response
   [resp]
   (as-> (:body resp) $
@@ -77,7 +75,7 @@
 (defn get-repo-languages!
   [repo token]
   (let [req {:method :get
-             :url (repo-langs-url repo)
+             :url (get repo :languages-url)
              :query-string "type=public"
              :headers {#?@(:clj ["user-agent" "Agent Smith"])
                        "accept" "application/vnd.github.v3+json"
@@ -87,6 +85,29 @@
              (fn [resp]
                (if (status/success? resp)
                  (parse-languages-response resp)
+                 (p/rejected (ex-info "Unsuccessful request" {:response resp})))))))
+
+(defn parse-contributors-response
+  [resp]
+  (as-> (:body resp) $
+        #?(:clj
+           (slurp $))
+        (j/json->clj $ {:keywordize? false})
+        (count $)))
+
+(defn get-repo-contributors!
+  [repo token]
+  (let [req {:method :get
+             :url (get repo :contributors-url)
+             :query-string "type=public"
+             :headers {#?@(:clj ["user-agent" "Agent Smith"])
+                       "accept" "application/vnd.github.v3+json"
+                       "authorization" (str "Token " token)}}
+        prom (http/send! client req)]
+    (p/then  prom
+             (fn [resp]
+               (if (status/success? resp)
+                 (parse-contributors-response resp)
                  (p/rejected (ex-info "Unsuccessful request" {:response resp})))))))
 
 ;; Data sources
@@ -105,19 +126,38 @@
   (-fetch [_ {:keys [token]}]
     (get-repo-languages! repo token)))
 
-(defn- fetch-repo-languages
+(deftype Contributors [repo]
+  u/DataSource
+  (-identity [_]
+    [:contributors (:name repo)])
+  (-fetch [_ {:keys [token]}]
+    (get-repo-contributors! repo token)))
+
+(defn- fetch-languages
   [repo languages]
   (u/map
    (fn [langs]
-     (assoc repo :languages (filter (set languages) langs))) ;; todo: filter relevant langs
-     (Languages. repo)))
+     (filter (set languages) langs))
+   (Languages. repo)))
+
+(defn- fetch-contributors
+  [repo]
+  (Contributors. repo))
+
+(defn- fetch-languages-and-contribs
+  [repo languages]
+  (u/map
+   (fn [[languages contributors]]
+     (assoc repo :languages languages :contributors contributors))
+   (u/collect [(fetch-languages repo languages)
+               (fetch-contributors repo)])))
 
 (defn- fetch-interesting-repos
   [repos projects languages]
   (let [interesting? (set projects)
         interesting-repos (filter #(interesting? (:name %)) repos)]
     (u/traverse
-     #(fetch-repo-languages % languages)
+     #(fetch-languages-and-contribs % languages)
      (u/value interesting-repos))))
 
 (defn- fetch-org-repos
