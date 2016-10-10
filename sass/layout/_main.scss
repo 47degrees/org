@@ -50,7 +50,10 @@
 					padding: 4px 10px;
 					cursor: pointer;
 					border-radius: $base-border-radius;
-					
+					transition: background $base-duration $base-timing;
+					&:hover {
+						background: $hover-button-color;
+					}
 					@include bp(medium){
 						padding: 8px 14px;
 						width: 100%;

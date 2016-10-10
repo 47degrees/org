@@ -20,6 +20,7 @@ $base-background-color: $gray-lighter;
 // Link Colors
 $base-link-color: $brand-primary;
 $hover-link-color: darken($base-link-color, 20);
+$hover-button-color: darken($base-link-color, 13);
 
 // Typography
 $base-font-size: 15px;
