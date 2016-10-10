@@ -47,8 +47,7 @@
 					background: $brand-primary;
 					color: $white;
 					font-size: 14px;
-					padding: 4px 0 4px 10px;
-					width: 80px;
+					padding: 4px 10px;
 					cursor: pointer;
 					border-radius: $base-border-radius;
 					
@@ -66,7 +65,7 @@
 				ul {
 					float: right;
 					position: absolute;
-					left: 0;
+					right: -10px;
 					top: 35px;
 					background: $white;
 					border-radius: $base-border-radius;
@@ -74,12 +73,14 @@
 					width: 150px;
 					box-shadow: rgba($gray-darker, 0.15) 0 0 8px;
 					@include bp(medium){
-						top: 65px;
+						top: 68px;
+						left: 0;
 						width: 100%;
 					}
 					
 					li {
 						padding: 8px 10px;
+						transition: background $base-duration $base-timing;
 						&:hover {
 							background: $gray-lighter;
 							cursor: pointer;
@@ -142,11 +143,10 @@
 				margin: 10px 0 5px 0;
 			}
 			ul {
-				padding: 0 10px;
 				margin-top: 24px;
 				@include display(flex);
 				@include flex-direction(row);
-				@include justify-content(space-between);
+				@include justify-content(space-around);
 				@include align-items(center);
 				li {
 					span {
