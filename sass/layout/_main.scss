@@ -124,6 +124,7 @@
 			transition: all $base-duration $base-timing;
 			@include span-columns(4);
 			@include omega(3n);
+		
 			
 			@include bp(medium) {
 				@include span-columns(12);
