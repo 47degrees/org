@@ -3,4 +3,167 @@
 //------------------------------------------------
 #site-main {
 	padding: 60px 0 70px 0;
+	@include bp(large) {
+		padding: 40px 0 30px 0;
+	}
+	.filter {
+		margin: 24px 0;
+		@include clearfix;
+		.tag {
+			ul {
+				li {
+					display: inline-block;
+					margin-right: 12px;
+					a.active {
+						color: $gray;
+					}
+				}
+				li:last-child {
+					margin-right: 0;
+				}
+			}
+			@include span-columns(8);
+			@include bp(medium) {
+				margin-bottom: 15px;
+			}
+		}
+		.order-by {
+			.dropdown-select {
+				position: relative;
+				float: right;
+				@include bp(medium){
+					float: left;
+					display: block;
+					width: 100%;
+				}
+				p {
+					display: inline-block;
+				}
+				
+				.description {
+					margin-right: 5px;
+				}
+				.button {
+					background: $brand-primary;
+					color: $white;
+					font-size: 14px;
+					padding: 4px 0 4px 10px;
+					width: 80px;
+					cursor: pointer;
+					border-radius: $base-border-radius;
+					
+					@include bp(medium){
+						width: 100%;
+						display: block;
+					}
+					
+					i {
+						margin-left: 8px;
+					}
+				}
+				
+				ul {
+					float: right;
+					position: absolute;
+					left: 0;
+					top: 35px;
+					background: $white;
+					border-radius: $base-border-radius;
+					border: $base-border;
+					width: 150px;
+					box-shadow: rgba($gray-darker, 0.15) 0 0 8px;
+					@include bp(medium){
+						top: 60px;
+						width: 100%;
+					}
+					
+					li {
+						padding: 8px 10px;
+						&:hover {
+							background: $gray-lighter;
+							cursor: pointer;
+						}
+					}
+				}
+			}
+			@include span-columns(4);
+			@include bp(medium) {
+				text-align: left;
+			}
+			span {
+				display: inline-block;
+				margin-right: 5px;
+			}
+		}
+		.tag,
+		.order-by {
+			@include bp(medium) {
+				@include span-columns(12);
+			}
+		}
+	}
+	.project-list {
+		a {
+			color: $gray-dark;
+			border-bottom: 30px solid #333;
+			@include clearfix;
+		}
+	
+		.project-info {
+			padding: 30px 24px;
+			margin-bottom: 30px;
+			background: #fff;
+			border-radius: $base-border-radius;
+			border: $base-border;
+			text-align: center;
+			transition: all $base-duration $base-timing;
+			@include span-columns(4);
+			@include omega(3n);
+			
+			@include bp(medium) {
+				@include span-columns(12);
+			}
+			
+			&:hover {
+				border-color: shade($base-border-color, 10%);
+				box-shadow: rgba($gray-darker, 0.15) 0 0 8px;
+			}
+			
+			img {
+				width: 44px;
+				height: auto;
+				@include border-top-radius(100px);
+				@include border-right-radius(100px);
+				@include border-bottom-radius(100px);
+				@include border-left-radius(100px);
+			}
+			h2 {
+				margin: 10px 0 5px 0;
+			}
+			ul {
+				padding: 0 10px;
+				margin-top: 24px;
+				@include display(flex);
+				@include flex-direction(row);
+				@include justify-content(space-between);
+				@include align-items(center);
+				li {
+					span {
+						display: block;
+					}
+					span:nth-child(1) {
+						color: $brand-primary;
+					}
+					span:nth-child(2) {
+						font-size: 14px;
+					}
+				}
+				li:nth-child(2n) {
+					background: $base-border-color;
+					height: 32px;
+					width: 1px;
+				}
+			}
+		}
+	}
 }
