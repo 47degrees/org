@@ -53,6 +53,7 @@
 					border-radius: $base-border-radius;
 					
 					@include bp(medium){
+						padding: 8px 14px;
 						width: 100%;
 						display: block;
 					}
@@ -73,7 +74,7 @@
 					width: 150px;
 					box-shadow: rgba($gray-darker, 0.15) 0 0 8px;
 					@include bp(medium){
-						top: 60px;
+						top: 65px;
 						width: 100%;
 					}
 					
