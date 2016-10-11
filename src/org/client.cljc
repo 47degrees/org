@@ -48,21 +48,24 @@
     (j/json->clj)
     (mapv make-repo)))
 
+(defn has-more-pages?
+  [resp]
+  )
+
 (defn get-org-repos!
   [org token]
-  ;; todo: follow pagination
   (let [req {:method :get
              :url (org-repos-url org)
-             :query-string "type=public"
+             :query-string "type=public&per_page=100"
              :headers {#?@(:clj ["user-agent" "Smith"])
                        "accept" "application/vnd.github.v3+json"
                        "authorization" (str "Token " token)}}
         prom (http/send! client req)]
-    (p/then  prom
-             (fn [resp]
-               (if (status/success? resp)
-                 (parse-repos-response resp)
-                 (p/rejected (ex-info "Unsuccessful request" {:response resp})))))))
+    (p/then prom
+            (fn [resp]
+              (if (status/success? resp)
+                (parse-repos-response resp) ;; cont pagination if available
+                (p/rejected (ex-info "Unsuccessful request" {:response resp})))))))
 
 (defn parse-languages-response
   [resp]
@@ -99,7 +102,7 @@
   [repo token]
   (let [req {:method :get
              :url (get repo :contributors-url)
-             :query-string "type=public"
+             :query-string "type=public&per_page=100"
              :headers {#?@(:clj ["user-agent" "Agent Smith"])
                        "accept" "application/vnd.github.v3+json"
                        "authorization" (str "Token " token)}}
@@ -137,7 +140,7 @@
   [repo languages]
   (u/map
    (fn [langs]
-     (filter (set languages) langs))
+     (into #{} (filter (set languages) langs)))
    (Languages. repo)))
 
 (defn- fetch-contributors
