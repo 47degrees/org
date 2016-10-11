@@ -33,9 +33,11 @@
 			}
 			@include bp(large) {
 				display: block;
+				order: 3;
 			}
 		}
 		.menu {
+			float: right;
 			ul {
 				@include bp(large) {
 					padding: 20px;
