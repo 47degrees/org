@@ -10,6 +10,9 @@
   {:organization "47deg"
    :projects #{"fetch" "mvessel" "macroid" "org" "case-classy" "sbot" "github4s" "second-bridge"}
    :languages #{"Scala" "Clojure" "Java" "Swift"}
+   :filter-language nil ;; one of the languages
+   :order :stars ;; #{:stars :fors :updated}
+   :query ""
    :token "0ea220b5c8de1be060c132e24771ed74537821be"})
 
 (defonce state

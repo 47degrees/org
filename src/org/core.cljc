@@ -73,46 +73,84 @@
     [:h1 (str "Open Source Projects by " organization)]
     (stats repos)]])
 
-(rum/defc main
-  [repos]
-  [:main#site-main
-   [:div.wrapper
-    [:div.search
-     [:input
-      {:type "text",
-       :name "nombre",
-       :placeholder "Search a project"}]]
-    [:div.filter
-     [:div.tag
-      [:ul
-       [:li [:a.active {:href "#"} "All " [:span (parens (count repos))]]]
-       (for [lang (all-languages repos)]
-         [:li
-          {:key lang}
-          [:a {:href "#"}
-           lang
-           [:span (parens (count (filter-by-language lang repos)))]]])]]
-     [:div.order-by
-      [:div.dropdown-select
-       [:p.description "Order by"]
-       [:p.button "Stars" [:i.fa.fa-caret-down]]
-       [:ul [:li "Stars"] [:li "Forks"] [:li "Updated"]]]]]
-    [:div.project-list
-     (for [{:keys [name description url stars forks contributors languages]} repos]
-       [:a.project-info
-        {:href url
-         :key name}
-        [:img {:src "img/image-project-info.png", :alt ""}]
-        [:h2 name]
-        [:p  description]
+(defn humanize-order
+  [order]
+  (case order
+    :stars "Stars"
+    :forks "Forks"
+    :updated "Updated"))
+
+(rum/defcs ordering < rum/reactive (rum/local false :expanded?)
+  [{:keys [expanded?]} state]
+  (let [is-expanded? (rum/react expanded?)
+        {:keys [order]} (rum/react state)
+        expand (fn [ev]
+                 (.preventDefault ev)
+                 (reset! expanded? true))
+        change-order (fn [new-order]
+                       (fn [ev]
+                         (.preventDefault ev)
+                         (swap! state assoc :order new-order)
+                         (reset! expanded? false)))]
+    [:div.order-by
+     [:div.dropdown-select
+      [:p.description "Order by"]
+      [:p.button
+       {:on-click expand}
+       (humanize-order order)
+       [:i.fa.fa-caret-down]]
+      (when is-expanded?
         [:ul
-         [:li [:span.octicon.octicon-code] [:span (apply str (interpose ", " languages))]]
-         [:li]
-         [:li [:span.octicon.octicon-git-branch] [:span forks]]
-         [:li]
-         [:li [:span.octicon.octicon-star] [:span stars]]
-         [:li]
-         [:li [:span.octicon.octicon-person] [:span contributors]]]])]]])
+         [:li {:on-click (change-order :stars)} "Stars"]
+         [:li {:on-click (change-order :forks)} "Forks"]
+         [:li {:on-click (change-order :updated)} "Updated"]])]]))
+
+(defn sort-repos
+  [repos order]
+  (reverse (sort-by order repos)))
+
+(rum/defc main < rum/reactive
+  [state]
+  (let [{:keys [repos
+                query
+                filter-language
+                order]} (rum/react state)
+        filtered-repos (sort-repos repos order)]
+    [:main#site-main
+     [:div.wrapper
+      [:div.search
+       [:input
+        {:type "text",
+         :name "nombre",
+         :placeholder "Search a project"}]]
+      [:div.filter
+       [:div.tag
+        [:ul
+         [:li [:a.active {:href "#"} "All " [:span (parens (count repos))]]]
+         (for [lang (all-languages repos)]
+           [:li
+            {:key lang}
+            [:a {:href "#"}
+             lang
+             " "
+             [:span (parens (count (filter-by-language lang repos)))]]])]]
+       (ordering state)]
+      [:div.project-list
+       (for [{:keys [name description url stars forks contributors languages]} filtered-repos]
+         [:a.project-info
+          {:href url
+           :key name}
+          [:img {:src "img/image-project-info.png", :alt ""}]
+          [:h2 name]
+          [:p  description]
+          [:ul
+           [:li [:span.octicon.octicon-code] [:span (apply str (interpose ", " languages))]]
+           [:li]
+           [:li [:span.octicon.octicon-git-branch] [:span forks]]
+           [:li]
+           [:li [:span.octicon.octicon-star] [:span stars]]
+           [:li]
+           [:li [:span.octicon.octicon-person] [:span contributors]]]])]]]))
 
 (rum/defc footer
   []
@@ -139,5 +177,5 @@
   (let [{:keys [organization repos]} (rum/react state)]
     [:div
      (header organization repos)
-     (main repos)
+     (main state)
      (footer)]))

@@ -11,6 +11,15 @@
        :cljs
        [httpurr.client.xhr :refer [client]])))
 
+#?(:clj
+   (defn parse-date
+     [raw]
+     raw)
+   :cljs
+   (defn parse-date
+     [raw]
+     (js/Date.parse raw)))
+
 ;; HTTP requests
 
 (defn org-repos-url
@@ -22,6 +31,7 @@
            name
            description
            owner
+           pushed_at
            html_url
            languages_url
            contributors_url
@@ -32,6 +42,7 @@
    :name name
    :description description
    :owner (get owner :login)
+   :updated (parse-date pushed_at)
    :url html_url
    :stars stargazers_count
    :watchers watchers_count
@@ -48,23 +59,20 @@
     (j/json->clj)
     (mapv make-repo)))
 
-(defn has-more-pages?
-  [resp]
-  )
-
 (defn get-org-repos!
   [org token]
-  (let [req {:method :get
+  (let [headers {#?@(:clj ["user-agent" "Smith"])
+                 "accept" "application/vnd.github.v3+json"
+                 "authorization" (str "Token " token)}
+        req {:method :get
              :url (org-repos-url org)
              :query-string "type=public&per_page=100"
-             :headers {#?@(:clj ["user-agent" "Smith"])
-                       "accept" "application/vnd.github.v3+json"
-                       "authorization" (str "Token " token)}}
+             :headers headers}
         prom (http/send! client req)]
     (p/then prom
             (fn [resp]
               (if (status/success? resp)
-                (parse-repos-response resp) ;; cont pagination if available
+                (parse-repos-response resp) ;; todo: cont pagination if available
                 (p/rejected (ex-info "Unsuccessful request" {:response resp})))))))
 
 (defn parse-languages-response
