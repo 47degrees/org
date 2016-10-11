@@ -37,7 +37,6 @@
 			}
 		}
 		.menu {
-			float: right;
 			ul {
 				@include bp(large) {
 					padding: 20px;
