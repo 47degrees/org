@@ -165,11 +165,9 @@
 
 (defn- fetch-interesting-repos
   [repos projects languages]
-  (let [interesting? (set projects)
-        interesting-repos (filter #(interesting? (:name %)) repos)]
-    (u/traverse
-     #(fetch-languages-and-contribs % languages)
-     (u/value interesting-repos))))
+  (u/traverse
+   #(fetch-languages-and-contribs % languages)
+   (u/value repos)))
 
 (defn- fetch-org-repos
   [organization projects languages]

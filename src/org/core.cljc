@@ -109,6 +109,25 @@
   [repos order]
   (reverse (sort-by order repos)))
 
+(rum/defc repo-card
+  [{:keys [name description url stars forks contributors languages]}]
+  [:a.project-info
+   {:href url
+    :key name}
+   [:img {:src "img/image-project-info.png", :alt ""}]
+   [:h2 name]
+   [:p  description]
+   [:ul
+    [:li [:span.octicon.octicon-code] [:span (if (seq languages)
+                                               (apply str (interpose ", " languages))
+                                               "Unknown")]]
+    [:li]
+    [:li [:span.octicon.octicon-git-branch] [:span forks]]
+    [:li]
+    [:li [:span.octicon.octicon-star] [:span stars]]
+    [:li]
+    [:li [:span.octicon.octicon-person] [:span contributors]]]])
+
 (rum/defc main < rum/reactive
   [state]
   (let [{:keys [repos
@@ -136,21 +155,8 @@
              [:span (parens (count (filter-by-language lang repos)))]]])]]
        (ordering state)]
       [:div.project-list
-       (for [{:keys [name description url stars forks contributors languages]} filtered-repos]
-         [:a.project-info
-          {:href url
-           :key name}
-          [:img {:src "img/image-project-info.png", :alt ""}]
-          [:h2 name]
-          [:p  description]
-          [:ul
-           [:li [:span.octicon.octicon-code] [:span (apply str (interpose ", " languages))]]
-           [:li]
-           [:li [:span.octicon.octicon-git-branch] [:span forks]]
-           [:li]
-           [:li [:span.octicon.octicon-star] [:span stars]]
-           [:li]
-           [:li [:span.octicon.octicon-person] [:span contributors]]]])]]]))
+       (for [repo filtered-repos]
+         (repo-card repo))]]]))
 
 (rum/defc footer
   []
