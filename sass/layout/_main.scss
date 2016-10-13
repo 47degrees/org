@@ -2,6 +2,7 @@
 //------------------------------------------------
 //------------------------------------------------
 #site-main {
+	background: $gray-lighter;
 	padding: 60px 0 70px 0;
 	@include bp(large) {
 		padding: 40px 0 30px 0;
@@ -16,6 +17,7 @@
 					margin-right: 12px;
 					a.active {
 						color: $gray;
+						pointer-events: none;
 					}
 				}
 				li:last-child {
@@ -31,7 +33,7 @@
 			.dropdown-select {
 				position: relative;
 				float: right;
-				@include bp(medium){
+				@include bp(medium) {
 					float: left;
 					display: block;
 					width: 100%;
@@ -39,7 +41,6 @@
 				p {
 					display: inline-block;
 				}
-				
 				.description {
 					margin-right: 5px;
 				}
@@ -51,36 +52,36 @@
 					cursor: pointer;
 					border-radius: $base-border-radius;
 					transition: background $base-duration $base-timing;
+					min-width: 100px;
 					&:hover {
 						background: $hover-button-color;
 					}
-					@include bp(medium){
+					@include bp(medium) {
 						padding: 8px 14px;
 						width: 100%;
 						display: block;
 					}
-					
 					i {
 						margin-left: 8px;
+						float: right;
+						padding-top: 4px;
 					}
 				}
-				
 				ul {
 					float: right;
 					position: absolute;
 					right: -10px;
-					top: 35px;
+					top: 36px;
 					background: $white;
 					border-radius: $base-border-radius;
 					border: $base-border;
 					width: 150px;
 					box-shadow: rgba($gray-darker, 0.15) 0 0 8px;
-					@include bp(medium){
+					@include bp(medium) {
 						top: 68px;
 						left: 0;
 						width: 100%;
 					}
-					
 					li {
 						padding: 8px 10px;
 						transition: background $base-duration $base-timing;
@@ -113,7 +114,6 @@
 			border-bottom: 30px solid #333;
 			@include clearfix;
 		}
-	
 		.project-info {
 			padding: 30px 24px;
 			margin-bottom: 30px;
@@ -124,17 +124,13 @@
 			transition: all $base-duration $base-timing;
 			@include span-columns(4);
 			@include omega(3n);
-		
-			
 			@include bp(medium) {
 				@include span-columns(12);
 			}
-			
 			&:hover {
 				border-color: shade($base-border-color, 10%);
 				box-shadow: rgba($gray-darker, 0.15) 0 0 8px;
 			}
-			
 			img {
 				width: 44px;
 				height: auto;
@@ -146,13 +142,11 @@
 			h2 {
 				margin: 10px 0 5px 0;
 			}
-			
 			p {
 				overflow: hidden;
-    		white-space: nowrap;
-    		text-overflow: ellipsis;
+				white-space: nowrap;
+				text-overflow: ellipsis;
 			}
-			
 			ul {
 				margin-top: 24px;
 				@include display(flex);
