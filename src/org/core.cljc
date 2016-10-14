@@ -24,6 +24,10 @@
            (contains? (:languages repo) lang))
           repos))
 
+(defn languages-by-count
+  [repos]
+  (let [langs (into [] (all-languages repos))]
+    (reverse (sort-by #(count (filter-by-language % repos)) langs))))
 
 (rum/defcs navigation < (rum/local false :visible?)
   [{:keys [visible?]}]
@@ -146,7 +150,7 @@
        [:div.tag
         [:ul
          [:li [:a.active {:href "#"} "All " [:span (parens (count repos))]]]
-         (for [lang (all-languages repos)]
+         (for [lang (languages-by-count repos)]
            [:li
             {:key lang}
             [:a {:href "#"}
