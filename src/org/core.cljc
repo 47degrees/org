@@ -243,8 +243,8 @@
 
 (rum/defc app < rum/reactive
   [state]
-  (let [{:keys [organization repos]} (rum/react state)]
+  (let [{:keys [configuration repos]} (rum/react state)]
     [:div
-     (header organization repos)
+     (header (:organization configuration) repos)
      (main state)
      (footer)]))

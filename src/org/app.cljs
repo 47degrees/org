@@ -6,30 +6,29 @@
    [promesa.core :as p]
    [rum.core :as rum]))
 
+(def configuration
+  #=(clojure.edn/read-string (clojure.core/slurp (clojure.java.io/resource "config.edn"))))
+
 (def default-state
-  {:organization "47deg"
-   :projects #{"fetch" "mvessel" "macroid" "org" "case-classy" "sbot" "github4s" "second-bridge"}
-   :languages #{"Scala" "Clojure" "Java" "Swift"}
-   :filter-language nil ;; one of the languages
-   :order :stars ;; #{:stars :fors :updated}
+  {:filter-language nil
+   :order :stars
    :query ""
-   :token "0ea220b5c8de1be060c132e24771ed74537821be"})
+   :configuration configuration})
 
 (defonce state
   (atom default-state))
 
 (defn init!
   [state]
-  (let [{:keys [organization
-                projects
-                languages
-                token]} @state]
+  (let [{:keys [configuration]} @state
+        {:keys [organization
+                token
+                languages]} configuration]
     (p/then (c/fetch-org-repos! organization {:token token
-                                              :projects projects
                                               :languages languages})
             (fn [repos]
-              (swap! state assoc :repos repos)))
-    (rum/mount (org/app state) (js/document.getElementById "app"))))
+              (swap! state assoc :repos repos)
+              (rum/mount (org/app state) (js/document.getElementById "app"))))))
 
 (init! state)
 
