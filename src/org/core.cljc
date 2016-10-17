@@ -113,6 +113,12 @@
   [repos order]
   (reverse (sort-by order repos)))
 
+(defn repos-by-language
+  [repos language]
+  (if language
+    (filter #(contains? (:languages %) language) repos)
+    repos))
+
 (rum/defc repo-card
   [{:keys [name description url stars forks contributors languages]}]
   [:a.project-info
@@ -132,13 +138,45 @@
     [:li]
     [:li [:span.octicon.octicon-person] [:span contributors]]]])
 
+(rum/defc filter-and-sort < rum/reactive
+  [state]
+  (let [select-lang (fn [lang]
+                      (fn [ev]
+                        (.preventDefault ev)
+                        (swap! state assoc :filter-language lang)))
+        {:keys [filter-language
+                repos]} (rum/react state)]
+    [:div.filter
+     [:div.tag
+      [:ul
+       [:li
+        {:key "all"}
+        [(if filter-language
+           :a
+           :a.active)
+         {:href "#"
+          :on-click (select-lang nil)}
+         "All " [:span (parens (count repos))]]]
+       (for [lang (languages-by-count repos)]
+         [:li
+          {:key lang}
+          [(if (= lang filter-language)
+           :a.active
+           :a)
+           {:href "#"
+            :on-click (select-lang lang)}
+           lang
+           " "
+           [:span (parens (count (filter-by-language lang repos)))]]])]]
+     (ordering state)]))
+
 (rum/defc main < rum/reactive
   [state]
   (let [{:keys [repos
                 query
                 filter-language
                 order]} (rum/react state)
-        filtered-repos (sort-repos repos order)]
+        filtered-repos (repos-by-language (sort-repos repos order) filter-language)]
     [:main#site-main
      [:div.wrapper
       [:div.search
@@ -146,18 +184,7 @@
         {:type "text",
          :name "nombre",
          :placeholder "Search a project"}]]
-      [:div.filter
-       [:div.tag
-        [:ul
-         [:li [:a.active {:href "#"} "All " [:span (parens (count repos))]]]
-         (for [lang (languages-by-count repos)]
-           [:li
-            {:key lang}
-            [:a {:href "#"}
-             lang
-             " "
-             [:span (parens (count (filter-by-language lang repos)))]]])]]
-       (ordering state)]
+      (filter-and-sort state)
       [:div.project-list
        (for [repo filtered-repos]
          (repo-card repo))]]]))
