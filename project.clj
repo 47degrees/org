@@ -13,7 +13,7 @@
                  [rum "0.10.5"]
                  [aleph "0.4.1"]
                  [funcool/httpurr "0.6.1"]
-                 [funcool/cuerdas "0.8.0"]
+                 [funcool/cuerdas "1.0.1"]
                  [funcool/urania "0.1.0"]
                  [funcool/hodgepodge "0.1.4"]
                  [funcool/promesa "1.5.0"]]

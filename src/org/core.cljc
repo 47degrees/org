@@ -1,6 +1,7 @@
 (ns org.core
   (:require
    [rum.core :as rum]
+   [cuerdas.core :as str]
    [clojure.set :as set]))
 
 (defn parens
@@ -119,6 +120,17 @@
     (filter #(contains? (:languages %) language) repos)
     repos))
 
+(defn repos-by-query
+  [repos query]
+  (if (str/blank? query)
+    repos
+    (filter (fn [repo]
+              (let [name (str/trim (str/lower (:name repo)))
+                    description (str/trim (str/lower (:description repo)))]
+                (or (str/includes? name query)
+                    (str/includes? description query))))
+            repos)))
+
 (rum/defc repo-card
   [{:keys [name description url stars forks contributors languages]}]
   [:a.project-info
@@ -137,6 +149,18 @@
     [:li [:span.octicon.octicon-star] [:span stars]]
     [:li]
     [:li [:span.octicon.octicon-person] [:span contributors]]]])
+
+(rum/defc search < rum/reactive
+  [state]
+  (let [{:keys [query]} (rum/react state)]
+    [:div.search
+     [:input
+      {:type "text"
+       :name "nombre"
+       :placeholder "Search a project"
+       ;;fdsafsdf:value query
+       :on-change (fn [ev]
+                    (swap! state assoc :query (.-value (.-target ev))))}]]))
 
 (rum/defc filter-and-sort < rum/reactive
   [state]
@@ -176,17 +200,14 @@
                 query
                 filter-language
                 order]} (rum/react state)
-        filtered-repos (repos-by-language (sort-repos repos order) filter-language)]
+        filtered-repos (repos-by-language (sort-repos repos order) filter-language)
+        searched-repos (repos-by-query filtered-repos query)]
     [:main#site-main
      [:div.wrapper
-      [:div.search
-       [:input
-        {:type "text",
-         :name "nombre",
-         :placeholder "Search a project"}]]
+      (search state)
       (filter-and-sort state)
       [:div.project-list
-       (for [repo filtered-repos]
+       (for [repo searched-repos]
          (repo-card repo))]]]))
 
 (rum/defc footer
