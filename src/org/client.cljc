@@ -4,6 +4,7 @@
    [httpurr.client :as http]
    [httpurr.status :as status]
    [urania.core :as u]
+   [cuerdas.core :as str]
    [promesa.core :as p]
    [org.json :as json]
    #? (:clj
@@ -19,6 +20,23 @@
    (defn parse-date
      [raw]
      (js/Date.parse raw)))
+
+(defn- rel->keyword
+  [rel-str]
+  (keyword (nth (str/split rel-str "\"") 1)))
+
+(defn parse-links
+  [resp]
+  (when-let [link (get-in resp [:headers "link"])]
+    (let [split-links (map #(str/split % \;) (str/split link \newline))]
+      (into {}
+            (map (fn [[url rel]]
+                   [(rel->keyword rel) (str/trim url "<>")]))
+            split-links))))
+
+(defn- has-next?
+  [resp]
+  (contains? (parse-links resp) :next))
 
 ;; HTTP requests
 
@@ -59,6 +77,25 @@
     (j/json->clj)
     (mapv make-repo)))
 
+(defn get-org-repos-next!
+  [token repos resp]
+  (let [links (parse-links resp)
+        headers {#?@(:clj ["user-agent" "Smith"])
+                 "accept" "application/vnd.github.v3+json"
+                 "authorization" (str "Token " token)}
+        req {:method :get
+             :url (:next links)
+             :headers headers}
+        prom (http/send! client req)]
+    (p/then prom
+            (fn [resp]
+              (if (status/success? resp)
+                (let [result (into repos (parse-repos-response resp))]
+                  (if (has-next? resp)
+                    (get-org-repos-next! token result resp)
+                    result))
+                (p/rejected (ex-info "Unsuccessful request" {:response resp})))))))
+
 (defn get-org-repos!
   [org token]
   (let [headers {#?@(:clj ["user-agent" "Smith"])
@@ -72,7 +109,10 @@
     (p/then prom
             (fn [resp]
               (if (status/success? resp)
-                (parse-repos-response resp) ;; todo: cont pagination if available
+                (let [result (parse-repos-response resp)]
+                  (if (has-next? resp)
+                    (get-org-repos-next! token result resp)
+                    result))
                 (p/rejected (ex-info "Unsuccessful request" {:response resp})))))))
 
 (defn parse-languages-response
@@ -106,6 +146,24 @@
         (j/json->clj $ {:keywordize? false})
         (count $)))
 
+(defn get-repo-contributors-next!
+  [token contribs links]
+  (let [headers {#?@(:clj ["user-agent" "Smith"])
+                 "accept" "application/vnd.github.v3+json"
+                 "authorization" (str "Token " token)}
+        req {:method :get
+             :url (:next links)
+             :headers headers}
+        prom (http/send! client req)]
+    (p/then prom
+            (fn [resp]
+              (if (status/success? resp)
+                (let [result (+ contribs (parse-contributors-response resp))]
+                  (if (has-next? resp)
+                    (get-repo-contributors-next! token result (parse-links resp))
+                    result))
+                (p/rejected (ex-info "Unsuccessful request" {:response resp})))))))
+
 (defn get-repo-contributors!
   [repo token]
   (let [req {:method :get
@@ -118,7 +176,10 @@
     (p/then  prom
              (fn [resp]
                (if (status/success? resp)
-                 (parse-contributors-response resp)
+                 (let [result (parse-contributors-response resp)]
+                   (if (has-next? resp)
+                     (get-repo-contributors-next! token result (parse-links resp))
+                     result))
                  (p/rejected (ex-info "Unsuccessful request" {:response resp})))))))
 
 ;; Data sources

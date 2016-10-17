@@ -140,15 +140,27 @@
    [:h2 name]
    [:p  description]
    [:ul
-    [:li [:span.octicon.octicon-code] [:span (if (seq languages)
-                                               (apply str (interpose ", " languages))
-                                               "Unknown")]]
-    [:li]
-    [:li [:span.octicon.octicon-git-branch] [:span forks]]
-    [:li]
-    [:li [:span.octicon.octicon-star] [:span stars]]
-    [:li]
-    [:li [:span.octicon.octicon-person] [:span contributors]]]])
+    [:li
+     {:key "langs"}
+     [:span.octicon.octicon-code]
+     [:span (if (seq languages)
+              (apply str (interpose ", " languages))
+              "Unknown")]]
+    [:li {:key "langs-fill"}]
+    [:li
+     {:key "forks"}
+     [:span.octicon.octicon-git-branch]
+     [:span forks]]
+    [:li {:key "forks-fill"}]
+    [:li
+     {:key "stars"}
+     [:span.octicon.octicon-star]
+     [:span stars]]
+    [:li {:key "stars-fill"}]
+    [:li
+     {:key "contributors"}
+     [:span.octicon.octicon-person]
+     [:span contributors]]]])
 
 (rum/defc search < rum/reactive
   [state]
@@ -158,7 +170,6 @@
       {:type "text"
        :name "nombre"
        :placeholder "Search a project"
-       ;;fdsafsdf:value query
        :on-change (fn [ev]
                     (swap! state assoc :query (.-value (.-target ev))))}]]))
 
