@@ -1,57 +1,125 @@
 (ns org.build
   (:require
-   [rum.core :as rum]
+   [org.state :as st]
    [org.core :as org]
-   [org.client :as c]))
-
-
-(defn compile-css
-  [config]
-  (let [{:keys [font
-                font-size
-                header-font-size
-                logo]} config]
-    ;; todo: spit a .scss file that
-    ;; - imports the main stylesheet
-    ;; - declares config as variables overriding the defaults
-    ;; - outputs the css to resources/public/css/style.css
-    
-    ))
-
-(defn compile-cljs
-  [config]
-  )
-
-(defn render-static-page
-  [config]
-  )
-
-;; todo: config spec
+   [org.client :as c]
+   [cljs.build.api :as cljs]
+   [cuerdas.core :as str]
+   [clojure.java.io :as io]
+   [clojure.java.shell :refer [sh]]
+   [rum.core :as rum]))
 
 (rum/defc page
   [state]
   [:html
-   [:head]
+   [:head
+    [:meta {:charset "UTF-8"}]
+    [:meta
+     {:name "viewport", :content "width=device-width, initial-scale=1"}]
+    [:link
+     {:rel "stylesheet",
+      :href
+      "https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css"}]
+    [:link
+     {:href
+      "https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css",
+      :rel "stylesheet",
+      :integrity
+      "sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1",
+      :crossorigin "anonymous"}]
+    [:link
+     {:href "css/style.css", :rel "stylesheet", :type "text/css"}]]
    [:body
     [:div {:id "app"}
      (org/app state)]]])
 
-(defn build
-  [{:keys [organization token projects languages] :as config}]
-  (let [repos (c/fetch-org-repos! organization {:token token
-                                                :projects projects
-                                                :languages languages})
-        state (atom {:organization organization
-                     :projects projects
-                     :languages languages
-                     :repos repos})
+(defn compile-css
+  [config]
+  (let [{:keys [primary-color
+                font]} config
+        {:keys [url
+                base
+                headings
+                sizes]} font
+        {:keys [light
+                regular
+                semi-bold
+                bold]} sizes
+        temp "temp"
+        tempsass (str temp ".scss")]
+    (let [sass (str/<<
+                "$brand-primary: ~{primary-color};"
+                ; Font
+                "@import url(~{url});"
+                "$base-font-family: ~{base};"
+                "$headings-font-family: ~{headings};"
+                ; Font sizes
+                "$font-light: ~{light};"
+                "$font-regular: ~{regular};"
+                "$font-semi-bold: ~{semi-bold};"
+                "$font-bold: ~{bold};"
+                ; Import default styles
+                "@import 'style.scss';"
+                )
+          tempsass "temp.scss"
+          _ (spit tempsass sass)
+          ; NOTE: not passing this via stdin since it behaves differently than when compiling a file
+          run (sh "sass" "--sourcemap=none" "-Isass" tempsass)]
+      (sh "rm" tempsass)
+      (:out run))))
+
+(defn compile-cljs!
+  [config]
+  (cljs/build "src"
+              {:main 'org.app
+               :output-to "out/org.js"
+               :optimizations :advanced
+               :verbose true}))
+
+(defn render-static-page
+  [repos {:keys [organization token] :as config}]
+  (let [ state (atom (assoc st/default-state :repos repos :configuration config))
         component (page state)]
     (rum/render-html component)))
 
-(comment
-  (bu/build {:organization "funcool"
-             :token token
-             :projects #{"httpurr" "urania"}
-             :languages #{"Clojure"}})
-  )
+(defn read-config!
+  [path]
+  (clojure.edn/read-string (slurp (clojure.java.io/resource path))))
 
+(defn fetch-data!
+  [{:keys [organization token]}]
+  @(c/fetch-org-repos! organization {:token token}))
+
+(defn main-
+  [& args]
+  (let [config (read-config! "config.edn")
+        repos (fetch-data! config)
+        html (render-static-page repos config)
+        style-config (get config :style)
+        css (compile-css style-config)]
+    (sh "mkdir" "-p" "out/js")
+    (sh "mkdir" "-p" "out/css")
+    (println "Compiling ClojureScript..")
+    (compile-cljs! config)
+    (spit "out/index.html" html)
+    (sh "touch" "out/css/style.css")
+    (sh "cp" "-R" "resources/public/img" "out/img")
+    (spit "out/css/style.css" css)))
+
+
+(comment
+  (require '[org.build :as b] :reload)
+  (require '[org.client :as c] :reload)
+  (require '[org.core :as org] :reload)
+  
+  (def conf (b/read-config! "config.edn"))
+  (def data (b/fetch-data! conf))
+  
+  (b/render-static-page data conf)
+
+  (do
+    (require '[org.core :as org] :reload)
+    (b/render-static-page data conf)    
+    )
+
+  )

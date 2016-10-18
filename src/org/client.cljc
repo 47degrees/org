@@ -28,7 +28,7 @@
 (defn parse-links
   [resp]
   (when-let [link (get-in resp [:headers "link"])]
-    (let [split-links (map #(str/split % \;) (str/split link \newline))]
+    (let [split-links (map #(str/split % ";") (str/split link "\n"))]
       (into {}
             (map (fn [[url rel]]
                    [(rel->keyword rel) (str/trim url "<>")]))
@@ -43,6 +43,12 @@
 (defn org-repos-url
   [org]
   (str "https://api.github.com/orgs/" org "/repos"))
+
+(defn headers
+  [token]
+  {#?@(:clj ["user-agent" "Smith"])
+   "accept" "application/vnd.github.v3+json"
+   "authorization" (str "Token " token)})
 
 (defn make-repo
   [{:keys [id
@@ -80,12 +86,9 @@
 (defn get-org-repos-next!
   [token repos resp]
   (let [links (parse-links resp)
-        headers {#?@(:clj ["user-agent" "Smith"])
-                 "accept" "application/vnd.github.v3+json"
-                 "authorization" (str "Token " token)}
         req {:method :get
              :url (:next links)
-             :headers headers}
+             :headers (headers token)}
         prom (http/send! client req)]
     (p/then prom
             (fn [resp]
@@ -98,13 +101,10 @@
 
 (defn get-org-repos!
   [org token]
-  (let [headers {#?@(:clj ["user-agent" "Smith"])
-                 "accept" "application/vnd.github.v3+json"
-                 "authorization" (str "Token " token)}
-        req {:method :get
+  (let [req {:method :get
              :url (org-repos-url org)
              :query-string "type=public&per_page=100"
-             :headers headers}
+             :headers (headers token)}
         prom (http/send! client req)]
     (p/then prom
             (fn [resp]
@@ -121,16 +121,14 @@
         #?(:clj
            (slurp $))
         (j/json->clj $ {:keywordize? false})
-        (keys $)))
+        (set (keys $))))
 
 (defn get-repo-languages!
   [repo token]
   (let [req {:method :get
              :url (get repo :languages-url)
              :query-string "type=public"
-             :headers {#?@(:clj ["user-agent" "Agent Smith"])
-                       "accept" "application/vnd.github.v3+json"
-                       "authorization" (str "Token " token)}}
+             :headers (headers token)}
         prom (http/send! client req)]
     (p/then  prom
              (fn [resp]
@@ -148,39 +146,34 @@
 
 (defn get-repo-contributors-next!
   [token contribs links]
-  (let [headers {#?@(:clj ["user-agent" "Smith"])
-                 "accept" "application/vnd.github.v3+json"
-                 "authorization" (str "Token " token)}
-        req {:method :get
+  (let [req {:method :get
              :url (:next links)
-             :headers headers}
+             :headers (headers token)}
         prom (http/send! client req)]
-    (p/then prom
-            (fn [resp]
-              (if (status/success? resp)
-                (let [result (+ contribs (parse-contributors-response resp))]
-                  (if (has-next? resp)
-                    (get-repo-contributors-next! token result (parse-links resp))
-                    result))
-                (p/rejected (ex-info "Unsuccessful request" {:response resp})))))))
+    (p/mapcat (fn [resp]
+                (if (status/success? resp)
+                  (let [result (+ contribs (parse-contributors-response resp))]
+                    (if (has-next? resp)
+                      (get-repo-contributors-next! token result (parse-links resp))
+                      (p/resolved result)))
+                  (p/rejected (ex-info "Unsuccessful request" {:response resp}))))
+              prom)))
 
 (defn get-repo-contributors!
   [repo token]
   (let [req {:method :get
              :url (get repo :contributors-url)
              :query-string "type=public&per_page=100"
-             :headers {#?@(:clj ["user-agent" "Agent Smith"])
-                       "accept" "application/vnd.github.v3+json"
-                       "authorization" (str "Token " token)}}
+             :headers (headers token)}
         prom (http/send! client req)]
-    (p/then  prom
-             (fn [resp]
+    (p/mapcat (fn [resp]
                (if (status/success? resp)
                  (let [result (parse-contributors-response resp)]
                    (if (has-next? resp)
                      (get-repo-contributors-next! token result (parse-links resp))
-                     result))
-                 (p/rejected (ex-info "Unsuccessful request" {:response resp})))))))
+                     (p/resolved result)))
+                 (p/rejected (ex-info "Unsuccessful request" {:response resp}))))
+             prom)))
 
 ;; Data sources
 
@@ -206,36 +199,27 @@
     (get-repo-contributors! repo token)))
 
 (defn- fetch-languages
-  [repo languages]
-  (u/map
-   (fn [langs]
-     (into #{} (filter (set languages) langs)))
-   (Languages. repo)))
+  [repo]
+  (Languages. repo))
 
 (defn- fetch-contributors
   [repo]
   (Contributors. repo))
 
 (defn- fetch-languages-and-contribs
-  [repo languages]
+  [repo]
   (u/map
    (fn [[languages contributors]]
      (assoc repo :languages languages :contributors contributors))
-   (u/collect [(fetch-languages repo languages)
+   (u/collect [(fetch-languages repo)
                (fetch-contributors repo)])))
 
-(defn- fetch-interesting-repos
-  [repos projects languages]
-  (u/traverse
-   #(fetch-languages-and-contribs % languages)
-   (u/value repos)))
-
 (defn- fetch-org-repos
-  [organization projects languages]
-  (u/mapcat
-   #(fetch-interesting-repos % projects languages)
+  [organization]
+  (u/traverse
+   #(fetch-languages-and-contribs %)
    (Repos. organization)))
 
 (defn fetch-org-repos!
-  [org {:keys [token projects languages]}]
-  (u/run! (fetch-org-repos org projects languages) {:env {:token token}}))
+  [org {:keys [token]}]
+  (u/run! (fetch-org-repos org) {:env {:token token}}))

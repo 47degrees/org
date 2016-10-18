@@ -14,7 +14,7 @@
                  [aleph "0.4.1"]
                  [funcool/httpurr "0.6.1"]
                  [funcool/cuerdas "1.0.1"]
-                 [funcool/urania "0.1.0"]
+                 [funcool/urania "0.1.1"]
                  [funcool/hodgepodge "0.1.4"]
                  [funcool/promesa "1.5.0"]]
 
