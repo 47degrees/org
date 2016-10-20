@@ -5,12 +5,17 @@
    [org.client :as c]
    [cljs.build.api :as cljs]
    [cuerdas.core :as str]
+   [cuerdas.regexp :as regexp]
    [clojure.java.io :as io]
    [clojure.java.shell :refer [sh]]
    [rum.core :as rum]))
 
+(defn str->base64
+  [s]
+  (.encodeToString (java.util.Base64/getEncoder) (.getBytes s)))
+
 (rum/defc page
-  [state]
+  [state configuration]
   [:html
    [:head
     [:meta {:charset "UTF-8"}]
@@ -30,8 +35,11 @@
     [:link
      {:href "css/style.css", :rel "stylesheet", :type "text/css"}]]
    [:body
-    [:div {:id "app"}
-     (org/app state)]]])
+    [:div {:id "app"
+           :data-state (str->base64 (pr-str @state))
+           :data-configuration (str->base64 (pr-str configuration))}
+     (org/app state)]
+    [:script {:src "org.js" :type "text/javascript"}]]])
 
 (defn compile-css
   [config]
@@ -78,8 +86,8 @@
 
 (defn render-static-page
   [repos {:keys [organization token] :as config}]
-  (let [ state (atom (assoc st/default-state :repos repos :configuration config))
-        component (page state)]
+  (let [state (atom (assoc st/default-state :repos repos :configuration config))
+        component (page state config)]
     (rum/render-html component)))
 
 (defn read-config!
@@ -111,15 +119,15 @@
   (require '[org.build :as b] :reload)
   (require '[org.client :as c] :reload)
   (require '[org.core :as org] :reload)
-  
+
   (def conf (b/read-config! "config.edn"))
   (def data (b/fetch-data! conf))
-  
+
   (b/render-static-page data conf)
 
   (do
     (require '[org.core :as org] :reload)
-    (b/render-static-page data conf)    
+    (b/render-static-page data conf)
     )
 
   )
