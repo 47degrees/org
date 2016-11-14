@@ -7,12 +7,6 @@
    [promesa.core :as p]
    [rum.core :as rum]))
 
-(defn read-config!
-  []
-  (let [app (js/document.getElementById "app")
-        raw (js/atob (.getAttribute app "data-configuration"))]
-    (reader/read-string raw)))
-
 (defn read-state!
   []
   (let [app (js/document.getElementById "app")
@@ -21,12 +15,8 @@
 
 (defn init!
   []
-  (let [config (read-config!)
-        initial-state (read-state!)
-        state (atom initial-state)
-        {:keys [organization
-                token
-                languages]} config]
+  (let [state (atom (read-state!))
+        {:keys [organization token]} (:config @state)]
     ;; mount app
     (rum/mount (org/app state) (js/document.getElementById "app"))
     ;; fetch fresh data

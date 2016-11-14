@@ -15,7 +15,7 @@
   (.encodeToString (java.util.Base64/getEncoder) (.getBytes s)))
 
 (rum/defc page
-  [state configuration]
+  [state]
   [:html
    [:head
     [:meta {:charset "UTF-8"}]
@@ -36,8 +36,7 @@
      {:href "css/style.css", :rel "stylesheet", :type "text/css"}]]
    [:body
     [:div {:id "app"
-           :data-state (str->base64 (pr-str @state))
-           :data-configuration (str->base64 (pr-str configuration))}
+           :data-state (str->base64 (pr-str @state))}
      (org/app state)]
     [:script {:src "org.js" :type "text/javascript"}]]])
 
@@ -67,8 +66,7 @@
                 "$font-semi-bold: ~{semi-bold};"
                 "$font-bold: ~{bold};"
                 ; Import default styles
-                "@import 'style.scss';"
-                )
+                "@import 'style.scss';")
           tempsass "temp.scss"
           _ (spit tempsass sass)
           ; NOTE: not passing this via stdin since it behaves differently than when compiling a file
@@ -86,8 +84,8 @@
 
 (defn render-static-page
   [repos {:keys [organization token] :as config}]
-  (let [state (atom (assoc st/default-state :repos repos :configuration config))
-        component (page state config)]
+  (let [state (atom (assoc st/default-state :repos repos :config config))
+        component (page state)]
     (rum/render-html component)))
 
 (defn read-config!
@@ -98,7 +96,7 @@
   [{:keys [organization token]}]
   @(c/fetch-org-repos! organization {:token token}))
 
-(defn main-
+(defn -main
   [& args]
   (let [config (read-config! "config.edn")
         repos (fetch-data! config)
@@ -114,20 +112,3 @@
     (sh "cp" "-R" "resources/public/img" "out/img")
     (spit "out/css/style.css" css)))
 
-
-(comment
-  (require '[org.build :as b] :reload)
-  (require '[org.client :as c] :reload)
-  (require '[org.core :as org] :reload)
-
-  (def conf (b/read-config! "config.edn"))
-  (def data (b/fetch-data! conf))
-
-  (b/render-static-page data conf)
-
-  (do
-    (require '[org.core :as org] :reload)
-    (b/render-static-page data conf)
-    )
-
-  )

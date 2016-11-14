@@ -132,35 +132,36 @@
             repos)))
 
 (rum/defc repo-card
-  [{:keys [name description url stars forks contributors languages]}]
-  [:a.project-info
-   {:href url
-    :key name}
-   [:img {:src "img/image-project-info.png", :alt ""}]
-   [:h2 name]
-   [:p  description]
-   [:ul
-    [:li
-     {:key "langs"}
-     [:span.octicon.octicon-code]
-     [:span (if (seq languages)
-              (apply str (interpose ", " languages))
-              "Unknown")]]
-    [:li {:key "langs-fill"}]
-    [:li
-     {:key "forks"}
-     [:span.octicon.octicon-git-branch]
-     [:span forks]]
-    [:li {:key "forks-fill"}]
-    [:li
-     {:key "stars"}
-     [:span.octicon.octicon-star]
-     [:span stars]]
-    [:li {:key "stars-fill"}]
-    [:li
-     {:key "contributors"}
-     [:span.octicon.octicon-person]
-     [:span contributors]]]])
+  [{:keys [name description url stars forks contributors languages]} languages-whitelist]
+  (let [filtered-languages (filter #(contains? languages-whitelist %) languages)]
+    [:a.project-info
+     {:href url
+      :key name}
+     [:img {:src "img/image-project-info.png", :alt ""}]
+     [:h2 name]
+     [:p  description]
+     [:ul
+      [:li
+       {:key "langs"}
+       [:span.octicon.octicon-code]
+       [:span (if (seq filtered-languages)
+                (apply str (interpose ", " filtered-languages))
+                "Unknown")]]
+      [:li {:key "langs-fill"}]
+      [:li
+       {:key "forks"}
+       [:span.octicon.octicon-git-branch]
+       [:span forks]]
+      [:li {:key "forks-fill"}]
+      [:li
+       {:key "stars"}
+       [:span.octicon.octicon-star]
+       [:span stars]]
+      [:li {:key "stars-fill"}]
+      [:li
+       {:key "contributors"}
+       [:span.octicon.octicon-person]
+       [:span contributors]]]]))
 
 (rum/defc search < rum/reactive
   [state]
@@ -180,7 +181,8 @@
                         (.preventDefault ev)
                         (swap! state assoc :filter-language lang)))
         {:keys [filter-language
-                repos]} (rum/react state)]
+                repos
+                config]} (rum/react state)]
     [:div.filter
      [:div.tag
       [:ul
@@ -192,7 +194,8 @@
          {:href "#"
           :on-click (select-lang nil)}
          "All " [:span (parens (count repos))]]]
-       (for [lang (languages-by-count repos)]
+       (for [lang (languages-by-count repos)
+             :when (contains? (:languages config) lang)]
          [:li
           {:key lang}
           [(if (= lang filter-language)
@@ -210,7 +213,8 @@
   (let [{:keys [repos
                 query
                 filter-language
-                order]} (rum/react state)
+                order
+                config]} (rum/react state)
         filtered-repos (repos-by-language (sort-repos repos order) filter-language)
         searched-repos (repos-by-query filtered-repos query)]
     [:main#site-main
@@ -219,7 +223,7 @@
       (filter-and-sort state)
       [:div.project-list
        (for [repo searched-repos]
-         (repo-card repo))]]]))
+         (repo-card repo (:languages config)))]]]))
 
 (rum/defc footer
   []
@@ -243,8 +247,8 @@
 
 (rum/defc app < rum/reactive
   [state]
-  (let [{:keys [configuration repos]} (rum/react state)]
+  (let [{:keys [config repos]} (rum/react state)]
     [:div
-     (header (:organization configuration) repos)
+     (header (:organization config) repos)
      (main state)
      (footer)]))
