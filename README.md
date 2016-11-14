@@ -10,12 +10,14 @@ itself when the user visits the page.
 
 ## Creating your own site
 
+First and foremost, ensure you have [Leiningen](http://leiningen.org) and [Sass](http://sass-lang.com) installed.
+
 For creating your own site you simple have to provide a configuration file under `resources/public/config.edn`. The file uses [edn syntax](https://github.com/edn-format/edn) and its pretty straightforward, here is an example with the defaults:
 
 ```clojure
 {:organization "47deg"
  :languages #{"Scala" "Clojure" "Java" "Swift"}
- :token "0ea220b5c8de1be060c132e24771ed74537821be"
+ :token "a-github-token"
  :style {:primary-color "#F44336"
          :font {:url "https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Poppins:300,400"
                 :base "'Open sans', sans-serif"
@@ -35,6 +37,10 @@ Let's break it down:
  + `:primary-color` sets the primary color of the webpage
  + `:font` configures different CSS font settings such as the URL and the heading or base typographies
 
+After you write your config file you can create the site under the `out` directory by running:
+
+    lein run
+
 ## Setup
 
 To get an interactive development environment run:
@@ -53,13 +59,6 @@ and you should see an alert in the browser window.
 To clean all compiled files:
 
     lein clean
-
-To create a production build run:
-
-    lein do clean, cljsbuild once min
-
-And open your browser in `resources/public/index.html`. You will not
-get live reloading, nor a REPL.
 
 ## SASS compilation
 
