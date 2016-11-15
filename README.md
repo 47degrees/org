@@ -37,7 +37,7 @@ Let's break it down:
  + `:primary-color` sets the primary color of the webpage
  + `:font` configures different CSS font settings such as the URL and the heading or base typographies
 
-After you write your config file you can create the site under the `out` directory by running:
+After you write your config file you can create the site under the `docs` directory by running:
 
     lein run
 

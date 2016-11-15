@@ -78,7 +78,7 @@
   [config]
   (cljs/build "src"
               {:main 'org.app
-               :output-to "out/org.js"
+               :output-to "docs/org.js"
                :optimizations :advanced
                :verbose true}))
 
@@ -103,12 +103,12 @@
         html (render-static-page repos config)
         style-config (get config :style)
         css (compile-css style-config)]
-    (sh "mkdir" "-p" "out/js")
-    (sh "mkdir" "-p" "out/css")
+    (sh "mkdir" "-p" "docs/js")
+    (sh "mkdir" "-p" "docs/css")
     (println "Compiling ClojureScript..")
     (compile-cljs! config)
-    (spit "out/index.html" html)
-    (sh "touch" "out/css/style.css")
-    (sh "cp" "-R" "resources/public/img" "out/img")
-    (spit "out/css/style.css" css)))
+    (spit "docs/index.html" html)
+    (sh "touch" "docs/css/style.css")
+    (sh "cp" "-R" "resources/public/img" "docs/img")
+    (spit "docs/css/style.css" css)))
 
