@@ -1,4 +1,6 @@
 {:organization "47deg"
+ :logo {:href "http://47deg.com"
+        :src "img/nav-brand.png"}
  :languages #{"Scala" "Clojure" "Java" "Swift"}
  :token "0ea220b5c8de1be060c132e24771ed74537821be"
  :style {:primary-color "#F44336"

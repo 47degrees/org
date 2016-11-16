@@ -3,6 +3,7 @@
    [cljs.reader :as reader]
    [org.core :as org]
    [org.client :as c]
+   [org.state :as st]
    [clojure.set :as set]
    [promesa.core :as p]
    [rum.core :as rum]))
@@ -11,7 +12,7 @@
   []
   (let [app (js/document.getElementById "app")
         raw (js/atob (.getAttribute app "data-state"))]
-    (reader/read-string raw)))
+    (merge st/default-state (reader/read-string raw))))
 
 (defn init!
   []

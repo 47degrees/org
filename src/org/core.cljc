@@ -31,7 +31,7 @@
     (reverse (sort-by #(count (filter-by-language % repos)) langs))))
 
 (rum/defcs navigation < (rum/local false :visible?)
-  [{:keys [visible?]}]
+  [{:keys [visible?]} {:keys [src href]}]
   (let [is-visible? @visible?
         toggle-visibility (fn [ev]
                             (.preventDefault ev)
@@ -43,7 +43,9 @@
                  :div.menu-panel-fade-screen.is-visible
                  :div.menu-panel-fade-screen)]
       [:nav
-       [:div.brand [:img {:src "img/nav-brand.png", :alt ""}]]
+       [:div.brand
+        [:a {:href href}
+         [:img {:src src :alt ""}]]]
        [:div.panel-button
         [:span.octicon.octicon-three-bars.menu-panel-button {:on-click toggle-visibility}]]
        [menu
@@ -71,10 +73,10 @@
      [:span [:span.octicon.octicon-code] "languages"]]]])
 
 (rum/defc header
-  [organization repos]
+  [{:keys [organization logo]} repos]
   [:header#site-header
    [:div.wrapper
-    (navigation)
+    (navigation logo)
     [:h1 (str "Open Source Projects by " organization)]
     (stats repos)]])
 
@@ -249,6 +251,6 @@
   [state]
   (let [{:keys [config repos]} (rum/react state)]
     [:div
-     (header (:organization config) repos)
+     (header config repos)
      (main state)
      (footer)]))
