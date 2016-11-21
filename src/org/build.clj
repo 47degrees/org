@@ -115,6 +115,6 @@
     (compile-cljs! config)
     (spit "docs/index.html" html)
     (sh "touch" "docs/css/style.css")
-    (sh "cp" "-R" "resources/public/img" "docs/img")
+    (sh "cp" "-R" "resources/public/img" "docs")
     (spit "docs/css/style.css" css)))
 
