@@ -137,7 +137,6 @@
     [:a.project-info
      {:href url
       :key name}
-     [:img {:src "img/image-project-info.png", :alt ""}]
      [:h2 name]
      [:p  description]
      [:ul
