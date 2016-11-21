@@ -4,6 +4,10 @@
    [cuerdas.core :as str]
    [clojure.set :as set]))
 
+(defn repos-by-config
+  [repos {:keys [included-projects]}]
+  (filter #(contains? included-projects (:name %)) repos))
+
 (defn parens
   [x]
   (str "(" x ")"))
@@ -35,6 +39,7 @@
   [:ul
    (for [{:keys [text href]} links]
      [:li
+      {:key text}
       [:a {:href href} text]])])
 
 (rum/defcs navigation < (rum/local false :visible?)
@@ -83,7 +88,7 @@
    [:div.wrapper
     (navigation config)
     [:h1 (str "Open Source Projects by " organization)]
-    (stats repos)]])
+    (stats (repos-by-config repos config))]])
 
 (defn humanize-order
   [order]
@@ -188,7 +193,8 @@
                         (swap! state assoc :filter-language lang)))
         {:keys [filter-language
                 repos
-                config]} (rum/react state)]
+                config]} (rum/react state)
+        repos (repos-by-config repos config)]
     [:div.filter
      [:div.tag
       [:ul
@@ -221,7 +227,9 @@
                 filter-language
                 order
                 config]} (rum/react state)
-        filtered-repos (repos-by-language (sort-repos repos order) filter-language)
+        base-repos (repos-by-config repos config)
+        sorted-repos (sort-repos base-repos order)
+        filtered-repos (repos-by-language sorted-repos filter-language)
         searched-repos (repos-by-query filtered-repos query)]
     [:main#site-main
      [:div.wrapper
