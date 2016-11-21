@@ -4,6 +4,18 @@
  :links [{:text "Blog" :href "http://47deg.com/blog"}
          {:text "Contact" :href "mailto:hello@47deg.com"}]
  :languages #{"Scala" "Clojure" "Java" "Swift"}
+ :included-projects #{"macroid"
+                      "fetch"
+                      "sbt-microsites"
+                      "scalacheck-datetime"
+                      "github4s"
+                      "org"
+                      "sbt-catalysts-extras"
+                      "sbot"
+                      "freestyle"
+                      "mvessel"
+                      "case-classy"
+                      "second-bridge"}
  :token "0ea220b5c8de1be060c132e24771ed74537821be"
  :style {:primary-color "#F44336"
          :font {:url "https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Poppins:300,400"

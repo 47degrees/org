@@ -25,7 +25,11 @@
             (fn [repos]
               (swap! state assoc :repos repos)))))
 
-(enable-console-print!)
-(init!)
+(defonce main
+  (do
+    (enable-console-print!)
+    (init!)))
 
-
+(defn on-js-reload
+  []
+  (println :reloaded))
