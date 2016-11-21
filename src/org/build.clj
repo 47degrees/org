@@ -88,6 +88,12 @@
         component (page state)]
     (rum/render-html component)))
 
+(defn render-blank-page
+  [{:keys [organization token] :as config}]
+  (let [state (atom (assoc st/default-state :config config))
+        component (page state)]
+    (rum/render-static-markup component)))
+
 (defn read-config!
   [path]
   (clojure.edn/read-string (slurp (clojure.java.io/resource path))))

@@ -30,9 +30,17 @@
   (let [langs (into [] (all-languages repos))]
     (reverse (sort-by #(count (filter-by-language % repos)) langs))))
 
+(rum/defc link-list
+  [links]
+  [:ul
+   (for [{:keys [text href]} links]
+     [:li
+      [:a {:href href} text]])])
+
 (rum/defcs navigation < (rum/local false :visible?)
-  [{:keys [visible?]} {:keys [src href]}]
-  (let [is-visible? @visible?
+  [{:keys [visible?]} {:keys [logo links]}]
+  (let [{:keys [src href]} logo
+        is-visible? @visible?
         toggle-visibility (fn [ev]
                             (.preventDefault ev)
                             (swap! visible? not))]
@@ -49,10 +57,7 @@
        [:div.panel-button
         [:span.octicon.octicon-three-bars.menu-panel-button {:on-click toggle-visibility}]]
        [menu
-        [:ul
-         [:li [:a {:href "#"} "How to"]]
-         [:li [:a {:href "#"} "Blog"]]
-         [:li [:a {:href "#"} "Contact"]]]]
+        (link-list links)]
        [fade {:on-click toggle-visibility}]])))
 
 (rum/defc stats
@@ -73,10 +78,10 @@
      [:span [:span.octicon.octicon-code] "languages"]]]])
 
 (rum/defc header
-  [{:keys [organization logo]} repos]
+  [{:keys [organization logo] :as config} repos]
   [:header#site-header
    [:div.wrapper
-    (navigation logo)
+    (navigation config)
     [:h1 (str "Open Source Projects by " organization)]
     (stats repos)]])
 
@@ -227,14 +232,11 @@
          (repo-card repo (:languages config)))]]]))
 
 (rum/defc footer
-  []
+  [{:keys [links]}]
   [:footer#site-footer
    [:div.wrapper
     [:div.navigation
-     [:ul
-      [:li [:a {:href "#"} "How to"]]
-      [:li [:a {:href "#"} "Blog"]]
-      [:li [:a {:href "#"} "Contact"]]]
+     (link-list links)
      [:p
       "Copyright © 2016 "
       [:a {:href "#"} "47 Degrees"]
@@ -252,4 +254,4 @@
     [:div
      (header config repos)
      (main state)
-     (footer)]))
+     (footer config)]))
