@@ -16,6 +16,8 @@ For creating your own site you simple have to provide a configuration file under
 
 ```clojure
 {:organization "47deg"
+ :logo {:src "img/logo.png"
+        :href "http://47deg.com"}
  :languages #{"Scala" "Clojure" "Java" "Swift"}
  :token "a-github-token"
  :style {:primary-color "#F44336"
@@ -31,6 +33,7 @@ For creating your own site you simple have to provide a configuration file under
 Let's break it down:
 
 - `:organization` is the name of your org in GitHub
+- `:logo` is a map with the source URL (`:src`) of your org logo and where it should link to (`:href`)
 - `:languages` is the set with the languages you are interested in filtering by
 - `:token` is a string containing the GitHub token required to use the GitHub API
 - `:style` is a map with style configuration
