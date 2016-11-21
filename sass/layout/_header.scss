@@ -19,6 +19,7 @@
 				width: 50%;
 				height: auto;
 				display: block;
+				max-width: 96px;
 				@include bp(large) {
 					width: 40%;
 					height: auto;
