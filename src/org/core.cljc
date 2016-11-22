@@ -166,12 +166,17 @@
                     (str/includes? description query))))
             repos)))
 
+(def logo-placeholder "http://placekitten.com/44/44") ;; todo
+
 (rum/defc repo-card
-  [{:keys [name description url stars forks contributors languages]} languages-whitelist]
+  [{:keys [name description url stars forks contributors languages]} languages-whitelist project-logos]
   (let [filtered-languages (filter #(contains? languages-whitelist %) languages)]
     [:a.project-info
      {:href url
       :key name}
+     (if-let [src (get project-logos name)]
+       [:img {:src src}]
+       [:img {:src logo-placeholder}])
      [:h2 name]
      [:p  description]
      [:ul
@@ -260,7 +265,7 @@
       (filter-and-sort state)
       [:div.project-list
        (for [repo searched-repos]
-         (repo-card repo (:languages config)))]]]))
+         (repo-card repo (:languages config) (:project-logos config)))]]]))
 
 (defn github-url
   [organization]

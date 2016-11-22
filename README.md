@@ -35,6 +35,10 @@ For creating your own site you simple have to provide a configuration file under
                       "mvessel"
                       "case-classy"
                       "second-bridge"}
+ :project-logos {"fetch" "https://rawgit.com/47deg/microsites/cdn//fetch/navbar_brand.png"
+                 "mvessel" "https://rawgit.com/47deg/microsites/cdn//mvessel/navbar_brand.png"
+                 "github4s" "https://rawgit.com/47deg/microsites/cdn//github4s/navbar_brand.png"
+                 "scalacheck-datetime" "https://rawgit.com/47deg/microsites/cdn//scalacheck-datetime/navbar_brand.png"}
  :token "a-github-token"
  :style {:primary-color "#F44336"
          :header {:background "linear-gradient(0deg, rgba(30, 39, 53, 0.88), rgba(30, 39, 53, 0.88)), url(\"../img/header-background.jpg\") no-repeat center center"}
@@ -56,7 +60,8 @@ Let's break it down:
  + `:twitter` contains your organization's Twitter handle (without the @)
  + `:facebook` contains your organization's Facebook handle
 - `:languages` is the set with the languages you are interested in filtering by
-- `:included-projects` is a set with the project names you want to be present in the website
+- `:included-projects` is the set with the projects you are interested in having on the site
+- `:project-logos` is a map from project names to the URL where their logo can be found, libraries without logos will show a placeholder
 - `:token` is a string containing the GitHub token required to use the GitHub API
 - `:style` is a map with style configuration
  + `:primary-color` sets the primary color of the webpage
