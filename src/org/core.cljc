@@ -105,7 +105,6 @@
       (fn [state]
         (let [local-state (:expanded? state)
               order-el (rum/ref state "order")]
-          (println :orderel order-el)
           ;; close on esc
           (js/document.addEventListener "keydown" (fn [ev]
                                                     (when (= (.-keyCode ev) esc)
