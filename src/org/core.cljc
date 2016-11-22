@@ -97,7 +97,23 @@
     :forks "Forks"
     :updated "Updated"))
 
-(rum/defcs ordering < rum/reactive (rum/local false :expanded?)
+(def esc 27)
+
+;; todo: click outside
+(def ordering-mixin
+  #?(:cljs
+     {:did-mount
+      (fn [state]
+        (let [local-state (:expanded? state)]
+          (js/document.addEventListener "keydown" (fn [ev]
+                                                    (println :kidown)
+                                                    (when (= (.-keyCode ev) esc)
+                                                      (reset! local-state false)))))
+        state)}
+     :clj
+     {}))
+
+(rum/defcs ordering < rum/reactive (rum/local false :expanded?) ordering-mixin
   [{:keys [expanded?]} state]
   (let [is-expanded? (rum/react expanded?)
         {:keys [order]} (rum/react state)
