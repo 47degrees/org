@@ -99,16 +99,22 @@
 
 (def esc 27)
 
-;; todo: click outside
 (def ordering-mixin
   #?(:cljs
      {:did-mount
       (fn [state]
-        (let [local-state (:expanded? state)]
+        (let [local-state (:expanded? state)
+              order-el (rum/ref state "order")]
+          (println :orderel order-el)
+          ;; close on esc
           (js/document.addEventListener "keydown" (fn [ev]
-                                                    (println :kidown)
                                                     (when (= (.-keyCode ev) esc)
-                                                      (reset! local-state false)))))
+                                                      (reset! local-state false))))
+          ;; close on click outside
+          (js/document.addEventListener "click" (fn [ev]
+                                                  (let [target (.-target ev)]
+                                                    (when-not (.contains order-el target)
+                                                      (reset! local-state false))))))
         state)}
      :clj
      {}))
@@ -126,6 +132,7 @@
                          (swap! state assoc :order new-order)
                          (reset! expanded? false)))]
     [:div.order-by
+     {:ref "order"}
      [:div.dropdown-select
       [:p.description "Order by"]
       [:p.button
