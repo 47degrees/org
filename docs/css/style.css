@@ -133,7 +133,6 @@ select {
 
 #site-header {
   padding: 40px 0 110px 0;
-  background: linear-gradient(0deg, rgba(30, 39, 53, 0.88), rgba(30, 39, 53, 0.88)), url("../img/header-background.jpg") no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
