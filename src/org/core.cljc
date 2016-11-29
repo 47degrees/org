@@ -83,8 +83,9 @@
      [:span [:span.octicon.octicon-code] "languages"]]]])
 
 (rum/defc header
-  [{:keys [organization logo] :as config} repos]
+  [{:keys [organization logo style] :as config} repos]
   [:header#site-header
+   {:style (:header style)}
    [:div.wrapper
     (navigation config)
     [:h1 (str "Open Source Projects by " organization)]

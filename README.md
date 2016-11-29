@@ -37,6 +37,7 @@ For creating your own site you simple have to provide a configuration file under
                       "second-bridge"}
  :token "a-github-token"
  :style {:primary-color "#F44336"
+         :header {:background "linear-gradient(0deg, rgba(30, 39, 53, 0.88), rgba(30, 39, 53, 0.88)), url(\"../img/header-background.jpg\") no-repeat center center"}
          :font {:url "https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Poppins:300,400"
                 :base "'Open sans', sans-serif"
                 :headings "'Poppins', sans-serif"
@@ -59,6 +60,7 @@ Let's break it down:
 - `:token` is a string containing the GitHub token required to use the GitHub API
 - `:style` is a map with style configuration
  + `:primary-color` sets the primary color of the webpage
+ + `:header` controls the styles of the header, only `:background` is supported for now
  + `:font` configures different CSS font settings such as the URL and the heading or base typographies
 
 After you write your config file you can create the site under the `docs` directory by running:

@@ -3,7 +3,6 @@
 //------------------------------------------------
 #site-header {
 	padding: 40px 0 110px 0;
-	background: linear-gradient(0deg, rgba($gray-darker, 0.88), rgba($gray-darker, 0.88)), url('../img/header-background.jpg') no-repeat center center;
 	@include image-size;
 	color: $white;
 	@include bp(large) {
