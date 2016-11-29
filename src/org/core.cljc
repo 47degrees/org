@@ -97,7 +97,28 @@
     :forks "Forks"
     :updated "Updated"))
 
-(rum/defcs ordering < rum/reactive (rum/local false :expanded?)
+(def esc 27)
+
+(def ordering-mixin
+  #?(:cljs
+     {:did-mount
+      (fn [state]
+        (let [local-state (:expanded? state)
+              order-el (rum/ref state "order")]
+          ;; close on esc
+          (js/document.addEventListener "keydown" (fn [ev]
+                                                    (when (= (.-keyCode ev) esc)
+                                                      (reset! local-state false))))
+          ;; close on click outside
+          (js/document.addEventListener "click" (fn [ev]
+                                                  (let [target (.-target ev)]
+                                                    (when-not (.contains order-el target)
+                                                      (reset! local-state false))))))
+        state)}
+     :clj
+     {}))
+
+(rum/defcs ordering < rum/reactive (rum/local false :expanded?) ordering-mixin
   [{:keys [expanded?]} state]
   (let [is-expanded? (rum/react expanded?)
         {:keys [order]} (rum/react state)
@@ -110,6 +131,7 @@
                          (swap! state assoc :order new-order)
                          (reset! expanded? false)))]
     [:div.order-by
+     {:ref "order"}
      [:div.dropdown-select
       [:p.description "Order by"]
       [:p.button
