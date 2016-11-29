@@ -239,8 +239,20 @@
        (for [repo searched-repos]
          (repo-card repo (:languages config)))]]]))
 
+(defn github-url
+  [organization]
+  (str "http://github.com/" organization))
+
+(defn twitter-url
+  [handle]
+  (str "http://twitter.com/" handle))
+
+(defn facebook-url
+  [handle]
+  (str "http://facebook.com/" handle))
+
 (rum/defc footer
-  [{:keys [links]}]
+  [{:keys [organization links social]}]
   [:footer#site-footer
    [:div.wrapper
     [:div.navigation
@@ -251,10 +263,18 @@
       " - Reactive, scalable software solutions."]]
     [:div.social
      [:ul
-      [:li "\n\t\t\t\t\t\tFollow us\n\t\t\t\t\t"]
-      [:li [:a {:href ""} [:i.fa.fa-github]]]
-      [:li [:a {:href ""} [:i.fa.fa-twitter]]]
-      [:li [:a {:href ""} [:i.fa.fa-facebook-official]]]]]]])
+      [:li "Follow us"]
+      [:li
+       [:a {:href (github-url organization)}
+        [:i.fa.fa-github]]]
+      (when-let [twitter (:twitter social)]
+        [:li
+         [:a {:href (twitter-url twitter)}
+          [:i.fa.fa-twitter]]])
+      (when-let [fb (:facebook social)]
+        [:li
+         [:a {:href (facebook-url fb)}
+          [:i.fa.fa-facebook]]])]]]])
 
 (rum/defc app < rum/reactive
   [state]
