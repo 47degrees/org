@@ -18,6 +18,10 @@
                       "mvessel"
                       "case-classy"
                       "second-bridge"}
+ :project-logos {"fetch" "https://rawgit.com/47deg/microsites/cdn//fetch/navbar_brand.png"
+                 "mvessel" "https://rawgit.com/47deg/microsites/cdn//mvessel/navbar_brand.png"
+                 "github4s" "https://rawgit.com/47deg/microsites/cdn//github4s/navbar_brand.png"
+                 "scalacheck-datetime" "https://rawgit.com/47deg/microsites/cdn//scalacheck-datetime/navbar_brand.png"}
  :token "0ea220b5c8de1be060c132e24771ed74537821be"
  :style {:primary-color "#F44336"
          :header {:background "linear-gradient(0deg, rgba(30, 39, 53, 0.88), rgba(30, 39, 53, 0.88)), url(\"../img/header-background.jpg\") no-repeat center center"}

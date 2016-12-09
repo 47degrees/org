@@ -132,12 +132,8 @@
 				box-shadow: rgba($gray-darker, 0.15) 0 0 8px;
 			}
 			img {
-				width: 44px;
+			    width: 44px;
 				height: auto;
-				@include border-top-radius(100px);
-				@include border-right-radius(100px);
-				@include border-bottom-radius(100px);
-				@include border-left-radius(100px);
 			}
 			h2 {
 				margin: 10px 0 5px 0;
