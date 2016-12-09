@@ -380,15 +380,7 @@ select {
       box-shadow: rgba(30, 39, 53, 0.15) 0 0 8px; }
     #site-main .project-list .project-info img {
       width: 44px;
-      height: auto;
-      border-top-left-radius: 100px;
-      border-top-right-radius: 100px;
-      border-bottom-right-radius: 100px;
-      border-top-right-radius: 100px;
-      border-bottom-left-radius: 100px;
-      border-bottom-right-radius: 100px;
-      border-bottom-left-radius: 100px;
-      border-top-left-radius: 100px; }
+      height: auto; }
     #site-main .project-list .project-info h2 {
       margin: 10px 0 5px 0; }
     #site-main .project-list .project-info p {
