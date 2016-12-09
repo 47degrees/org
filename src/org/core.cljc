@@ -166,7 +166,7 @@
                     (str/includes? description query))))
             repos)))
 
-(def logo-placeholder "http://placekitten.com/44/44") ;; todo
+(def logo-placeholder "img/image-project-info.png")
 
 (rum/defc repo-card
   [{:keys [name description url stars forks contributors languages]} languages-whitelist project-logos]
