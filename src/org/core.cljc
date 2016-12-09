@@ -83,13 +83,16 @@
      [:span [:span.octicon.octicon-code] "languages"]]]])
 
 (rum/defc header
-  [{:keys [organization logo style] :as config} repos]
-  [:header#site-header
-   {:style (:header style)}
-   [:div.wrapper
-    (navigation config)
-    [:h1 (str "Open Source Projects by " organization)]
-    (stats (repos-by-config repos config))]])
+  [{:keys [organization-name organization logo style] :as config} repos]
+  (let [org (or organization-name organization)
+        headline (str "Open Source Projects by " org)]
+    [:header#site-header
+     {:style (:header style)}
+     [:title headline]
+     [:div.wrapper
+      (navigation config)
+      [:h1 headline]
+      (stats (repos-by-config repos config))]]))
 
 (defn humanize-order
   [order]

@@ -1,4 +1,5 @@
 {:organization "47deg"
+ :organization-name "47 Degrees"
  :logo {:href "http://47deg.com"
         :src "img/nav-brand.png"}
  :links [{:text "Blog" :href "http://47deg.com/blog"}
