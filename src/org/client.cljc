@@ -257,7 +257,6 @@
    fetch-languages-and-contribs
    (u/collect
     (mapv (fn [{:keys [user repo]}]
-            (println :user user :repo repo)
             (Repo. user repo))
           repos))))
 

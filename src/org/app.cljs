@@ -23,7 +23,6 @@
     ;; fetch fresh data
     (p/then (c/fetch-org-and-extra-repos! organization config)
             (fn [repos]
-              (println :repos repos)
               (swap! state assoc :repos repos)))))
 
 (defonce main

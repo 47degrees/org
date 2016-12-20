@@ -112,7 +112,6 @@
   [& args]
   (let [config (read-config! "config.edn")
         repos (fetch-data! config)
-        _ (println :repos repos)
         html (render-static-page repos config)
         style-config (get config :style)
         css (compile-css style-config)]
