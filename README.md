@@ -89,6 +89,7 @@ Let's break it down:
  + `:facebook` contains your organization's Facebook handle
 - `:languages` is the set with the languages you are interested in filtering by
 - `:included-projects` is the set with the projects you are interested in having on the site
+- `:extra-repos` allows you to add extra repos out of the or (maps with `:user` and `:repo`)
 - `:project-logos` is a map from project names to the URL where their logo can be found, libraries without logos will show a placeholder
 - `:token` is a string containing the GitHub token required to use the GitHub API
 - `:footer` allows you to configure the footer with Hiccup

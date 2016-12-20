@@ -40,6 +40,10 @@
 
 ;; HTTP requests
 
+(defn repo-url
+  [user repo]
+  (str "https://api.github.com/repos/" user "/" repo))
+
 (defn org-repos-url
   [org]
   (str "https://api.github.com/orgs/" org "/repos"))
@@ -74,6 +78,15 @@
    :languages-url languages_url
    :contributors-url contributors_url})
 
+(defn parse-repo-response
+  [resp]
+  (->> resp
+    :body
+    #?(:clj
+       (slurp))
+    (j/json->clj)
+    make-repo))
+
 (defn parse-repos-response
   [resp]
   (as-> (:body  resp) $
@@ -96,6 +109,18 @@
                   (if (has-next? resp)
                     (get-org-repos-next! token result resp)
                     result))
+                (p/rejected (ex-info "Unsuccessful request" {:response resp})))))))
+
+(defn get-repo!
+  [user repo token]
+  (let [req {:method :get
+             :url (repo-url user repo)
+             :headers (headers token)}
+        prom (http/send! client req)]
+    (p/then prom
+            (fn [resp]
+              (if (status/success? resp)
+                (parse-repo-response resp)
                 (p/rejected (ex-info "Unsuccessful request" {:response resp})))))))
 
 (defn get-org-repos!
@@ -176,6 +201,13 @@
 
 ;; Data sources
 
+(deftype Repo [user repo]
+  u/DataSource
+  (-identity [_]
+    [:repo [user repo]])
+  (-fetch [_ {:keys [token]}]
+    (get-repo! user repo token)))
+
 (deftype Repos [org]
   u/DataSource
   (-identity [_]
@@ -216,9 +248,29 @@
 (defn- fetch-org-repos
   [organization]
   (u/traverse
-   #(fetch-languages-and-contribs %)
+   fetch-languages-and-contribs
    (Repos. organization)))
 
+(defn- fetch-repos
+  [repos]
+  (u/traverse
+   fetch-languages-and-contribs
+   (u/collect
+    (mapv (fn [{:keys [user repo]}]
+            (println :user user :repo repo)
+            (Repo. user repo))
+          repos))))
+
+(defn fetch-org-and-extra-repos
+  [org {:keys [token extra-repos]}]
+  (u/collect [(fetch-org-repos org)
+              (fetch-repos extra-repos)]))
+
+(defn fetch-org-and-extra-repos!
+  [org {:keys [token] :as config}]
+  (p/then (u/run! (fetch-org-and-extra-repos org config) {:env {:token token}})
+          (fn [[org-repos extra-repos]]
+            (concat org-repos extra-repos))))
 (defn fetch-org-repos!
   [org {:keys [token]}]
   (u/run! (fetch-org-repos org) {:env {:token token}}))

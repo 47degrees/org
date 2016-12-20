@@ -17,12 +17,13 @@
 (defn init!
   []
   (let [state (atom (read-state!))
-        {:keys [organization token]} (:config @state)]
+        {:keys [organization token extra-repos] :as config} (:config @state)]
     ;; mount app
     (rum/mount (org/app state) (js/document.getElementById "app"))
     ;; fetch fresh data
-    (p/then (c/fetch-org-repos! organization {:token token})
+    (p/then (c/fetch-org-and-extra-repos! organization config)
             (fn [repos]
+              (println :repos repos)
               (swap! state assoc :repos repos)))))
 
 (defonce main
