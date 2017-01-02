@@ -12,7 +12,34 @@ itself when the user visits the page.
 
 First and foremost, ensure you have [Leiningen](http://leiningen.org) and [Sass](http://sass-lang.com) installed.
 
-For creating your own site you simple have to provide a configuration file under `resources/public/config.edn`. The file uses [edn syntax](https://github.com/edn-format/edn) and its pretty straightforward, here is an example with the defaults:
+### Clone the repository
+
+Clone this repository to a local directory (`my-org` in our example):
+
+```sh
+$ git clone https://github.com/47deg/org.git my-org
+$ cd my-org
+```
+
+You'll want to configure the repo to point at your organization repo:
+
+```sh
+$ git remote rm origin
+$ git remote add origin https://github.com/my-org/my-org.github.io.git
+```
+
+Since organization pages must be the content of the `master` branch, you may want to create another
+branch for hosting the "raw" website:
+
+```sh
+$ git checkout -b raw
+$ git push -u origin raw
+```
+
+### Edit the configuration
+
+For creating your own site you simple have to provide a configuration file under `resources/config.edn`. The file uses [edn syntax](https://github.com/edn-format/edn)
+and its pretty straightforward, here is an example with the defaults:
 
 ```clojure
 {:organization "47deg"
@@ -68,31 +95,36 @@ Let's break it down:
  + `:primary-color` sets the primary color of the webpage
  + `:header` controls the styles of the header, only `:background` is supported for now
  + `:font` configures different CSS font settings such as the URL and the heading or base typographies
+ 
+### Preview your site
 
-After you write your config file you can create the site under the `docs` directory by running:
+After editing the configuration, you can preview the site by running
 
-    lein run
+```sh
+$ lein figwheel
+```
 
-## Setup
+and pointing your browser to [localhost:3449](http://localhost:3449).
 
-To get an interactive development environment run:
+### Build your site
 
-    lein figwheel
+You can create the static site under the `docs` directory by running:
 
-and open your browser at [localhost:3449](http://localhost:3449/).
-This will auto compile and send all changes to the browser without the
-need to reload. After the compilation process is complete, you will
-get a Browser Connected REPL. An easy way to try it is:
+```sh
+$ lein run
+```
 
-    (js/alert "Am I connected?")
+After that, you may want to publish the `docs` directory to a branch so its served by GitHub.
+Assuming you want to push the `docs` directory as the content of the `master` branch, you can do:
 
-and you should see an alert in the browser window.
+```sh
+git subtree push --prefix docs origin master
+```
+	
+	
+Congratulations, you just built your organization's open source project site!
 
-To clean all compiled files:
-
-    lein clean
-
-## SASS compilation
+#### SASS compilation
 
 For compiling the SASS styles into CSS, run the following command at the root of the directory:
 
