@@ -25,7 +25,7 @@
                  "scalacheck-datetime" "https://rawgit.com/47deg/microsites/cdn//scalacheck-datetime/navbar_brand.png"}
  :token "0ea220b5c8de1be060c132e24771ed74537821be"
  :footer [:p
-          "Copyright © 2016 "
+          "Copyright 2016 "
           [:a {:href "http://47deg.com"} "47 Degrees"]
           " - Crafted with love for the Open Source community"]
  :style {:primary-color "#F44336"
