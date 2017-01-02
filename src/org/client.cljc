@@ -76,12 +76,11 @@
 
 (defn parse-repos-response
   [resp]
-  (->> resp
-    :body
+  (as-> (:body  resp) $
     #?(:clj
-       (slurp))
-    (j/json->clj)
-    (mapv make-repo)))
+       (slurp $))
+    (j/json->clj $ {:keywordize? true :default []})
+    (mapv make-repo $)))
 
 (defn get-org-repos-next!
   [token repos resp]
@@ -120,7 +119,7 @@
   (as-> (:body resp) $
         #?(:clj
            (slurp $))
-        (j/json->clj $ {:keywordize? false})
+        (j/json->clj $ {:keywordize? false :default {}})
         (set (keys $))))
 
 (defn get-repo-languages!
@@ -141,7 +140,7 @@
   (as-> (:body resp) $
         #?(:clj
            (slurp $))
-        (j/json->clj $ {:keywordize? false})
+        (j/json->clj $ {:keywordize? false :default []})
         (count $)))
 
 (defn get-repo-contributors-next!
