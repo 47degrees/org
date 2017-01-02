@@ -15,7 +15,7 @@
   (.encodeToString (java.util.Base64/getEncoder) (.getBytes s)))
 
 (rum/defc page
-  [state]
+  [state {:keys [js-root] :or {js-root ""}}]
   [:html
    [:head
     [:meta {:charset "UTF-8"}]
@@ -43,7 +43,7 @@
     [:div {:id "app"
            :data-state (str->base64 (pr-str @state))}
      (org/app state)]
-    [:script {:src "org.js" :type "text/javascript"}]]])
+    [:script {:src (str js-root "org.js") :type "text/javascript"}]]])
 
 (defn compile-css
   [config]
@@ -90,13 +90,13 @@
 (defn render-static-page
   [repos {:keys [organization token] :as config}]
   (let [state (atom (assoc st/default-state :repos repos :config config))
-        component (page state)]
+        component (page state {:js-root ""})]
     (rum/render-html component)))
 
-(defn render-blank-page
-  [{:keys [organization token] :as config}]
-  (let [state (atom (assoc st/default-state :config config))
-        component (page state)]
+(defn render-index-page
+  [repos {:keys [organization token] :as config}]
+  (let [state (atom (assoc st/default-state :repos repos :config config))
+        component (page state {:js-root "js/compiled/"})]
     (rum/render-static-markup component)))
 
 (defn read-config!
