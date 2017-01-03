@@ -283,15 +283,12 @@
   (str "http://facebook.com/" handle))
 
 (rum/defc footer
-  [{:keys [organization links social]}]
+  [{:keys [organization links social footer]}]
   [:footer#site-footer
    [:div.wrapper
     [:div.navigation
      (link-list links)
-     [:p
-      "Copyright © 2016 "
-      [:a {:href "#"} "47 Degrees"]
-      " - Reactive, scalable software solutions."]]
+     footer]
     [:div.social
      [:ul
       [:li "Follow us"]
