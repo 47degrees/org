@@ -1,0 +1,13 @@
+language: clojure
+
+before_install:
+ - gem install sass
+
+script: lein run
+
+branches:
+  only:
+   - master
+
+after_success:
+ - ./scripts/deploy.sh
