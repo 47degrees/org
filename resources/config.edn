@@ -32,7 +32,8 @@
           [:a {:href "http://47deg.com"} "47 Degrees"]
           " - Crafted with love for the Open Source community"]
  :style {:primary-color "#F44336"
-         :header {:background "linear-gradient(0deg, rgba(30, 39, 53, 0.88), rgba(30, 39, 53, 0.88)), url(\"img/header-background.jpg\") no-repeat center center"}
+         :header {:background "linear-gradient(0deg, rgba(30, 39, 53, 0.88), rgba(30, 39, 53, 0.88)), url(\"img/header-background.jpg\") no-repeat center center"
+                  :background-size "cover"}
          :font {:url "https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Poppins:300,400"
                 :base "'Open sans', sans-serif"
                 :headings "'Poppins', sans-serif"
