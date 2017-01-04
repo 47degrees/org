@@ -4,12 +4,15 @@
 git config --global user.name "Travis CI"
 git config --global user.email "al.gg@47deg.com"
 
-# Commit built site
+# Pull latest version of published subtree
 git checkout master
+git subtree pull --prefix=docs https://47deg:$GITHUB_API_KEY@github.com/47deg/47deg.github.io.git master
+
+# Build & Commit built site
+lein run
 git add docs
 git commit -m "[skip ci] Generate site"
 git push https://47deg:$GITHUB_API_KEY@github.com/47deg/org master
 
 # Push built subtree to official website
-git subtree pull --prefix=docs https://47deg:$GITHUB_API_KEY@github.com/47deg/47deg.github.io.git master
 git subtree push --prefix=docs https://47deg:$GITHUB_API_KEY@github.com/47deg/47deg.github.io.git master
