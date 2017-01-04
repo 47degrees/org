@@ -11,4 +11,4 @@ git commit -m "[skip ci] Generate site"
 git push https://47deg:$GITHUB_API_KEY@github.com/47deg/org master
 
 # Push built subtree to official website
-git subtree push --prefix=docs https://47deg:$GITHUB_API_KEY@github.com/47deg/47deg.github.io master 1> /dev/null
+git subtree push --prefix=docs https://47deg:$GITHUB_API_KEY@github.com/47deg/47deg.github.io.git master
