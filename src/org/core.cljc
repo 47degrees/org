@@ -92,7 +92,7 @@
      [:div.wrapper
       (navigation config)
       [:h1 headline]
-      (stats (repos-by-config repos config))]]))
+      (stats repos)]]))
 
 (defn humanize-order
   [order]
