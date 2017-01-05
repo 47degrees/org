@@ -82,7 +82,8 @@ Let's break it down:
 
 - `:organization` is the name of your org in GitHub
 - `:organization-name` is the human-readable name of your org. `:organization` will be used if not provided.
-- `:logo` is a map with the source URL (`:src`) of your org logo and where it should link to (`:href`)
+- `:logo` is a map with the source URL (`:src`) of your org logo and where it should link to (`:href`), optionally with 
+   the styles for the `img` tag (`:style`)
 - `:links` is a vector with maps that containt link text (`:text`) and href (`:href`)
 - `:social` is a map for specifying the handles in different social networks
  + `:twitter` contains your organization's Twitter handle (without the @)
