@@ -92,7 +92,6 @@ Let's break it down:
 - `:extra-repos` allows you to add extra repos out of the org (maps with `:user` and `:repo`)
 - `:project-logos` is a map from project names to the URL where their logo can be found, libraries without logos will show a placeholder
 - `:token` is a string containing the GitHub token required to use the GitHub API
-- `:footer` allows you to configure the footer with Hiccup
 - `:style` is a map with style configuration
  + `:primary-color` sets the primary color of the webpage
  + `:header` controls the styles of the header, only `:background` is supported for now
