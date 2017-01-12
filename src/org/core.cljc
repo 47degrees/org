@@ -292,7 +292,11 @@
            org (or organization-name organization)]
        [:p
         (str "Copyright " year " " org " - Built with ")
-        [:a {:href "http://github.com/47deg/org"} "org"]])]
+        [:a {:href "http://github.com/47deg/org"} "org"]
+        (when (get footer :acknowledgment true)
+          [:span
+           " by "
+           [:a {:href "http://47deg.com"} "47 Degrees"]])])]
     [:div.social
      [:ul
       [:li "Follow us"]
