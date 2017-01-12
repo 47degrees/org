@@ -283,12 +283,20 @@
   (str "http://facebook.com/" handle))
 
 (rum/defc footer
-  [{:keys [organization links social footer]}]
+  [{:keys [organization organization-name links social footer]}]
   [:footer#site-footer
    [:div.wrapper
     [:div.navigation
      (link-list links)
-     footer]
+     (let [year 2016
+           org (or organization-name organization)]
+       [:p
+        (str "Copyright " year " " org " - Built with ")
+        [:a {:href "http://github.com/47deg/org"} "org"]
+        (when (get footer :acknowledgment true)
+          [:span
+           " by "
+           [:a {:href "http://47deg.com"} "47 Degrees"]])])]
     [:div.social
      [:ul
       [:li "Follow us"]

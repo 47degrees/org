@@ -67,6 +67,7 @@ and its pretty straightforward, here is an example with the defaults:
                  "github4s" "https://rawgit.com/47deg/microsites/cdn//github4s/navbar_brand.png"
                  "scalacheck-datetime" "https://rawgit.com/47deg/microsites/cdn//scalacheck-datetime/navbar_brand.png"}
  :token "a-github-token"
+ :footer {:acknowledgment true}
  :style {:primary-color "#F44336"
          :header {:background "linear-gradient(0deg, rgba(30, 39, 53, 0.88), rgba(30, 39, 53, 0.88)), url(\"../img/header-background.jpg\") no-repeat center center"}
          :font {:url "https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Poppins:300,400"
@@ -93,11 +94,12 @@ Let's break it down:
 - `:extra-repos` allows you to add extra repos out of the org (maps with `:user` and `:repo`)
 - `:project-logos` is a map from project names to the URL where their logo can be found, libraries without logos will show a placeholder
 - `:token` is a string containing the GitHub token required to use the GitHub API
-- `:footer` allows you to configure the footer with Hiccup
 - `:style` is a map with style configuration
  + `:primary-color` sets the primary color of the webpage
  + `:header` controls the styles of the header, only `:background` is supported for now
  + `:font` configures different CSS font settings such as the URL and the heading or base typographies
+- `:footer` is for settings related to the footer
+ + `:acknowledgment` is a boolean flag for toggling the "by 47 Degrees" acknowledgment in the footer
  
 ### Preview your site
 
