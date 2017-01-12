@@ -44,7 +44,7 @@
 
 (rum/defcs navigation < (rum/local false :visible?)
   [{:keys [visible?]} {:keys [logo links]}]
-  (let [{:keys [src href]} logo
+  (let [{:keys [src href style]} logo
         is-visible? @visible?
         toggle-visibility (fn [ev]
                             (.preventDefault ev)
@@ -58,7 +58,7 @@
       [:nav
        [:div.brand
         [:a {:href href}
-         [:img {:src src :alt ""}]]]
+         [:img {:src src :style style}]]]
        [:div.panel-button
         [:span.octicon.octicon-three-bars.menu-panel-button {:on-click toggle-visibility}]]
        [menu
