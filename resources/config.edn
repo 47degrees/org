@@ -5,7 +5,8 @@
  :links [{:text "Blog" :href "http://47deg.com/blog"}
          {:text "Contact" :href "mailto:hello@47deg.com"}]
  :social {:twitter "47deg"
-          :facebook "47degreesLLC"}
+          :facebook "47degreesLLC"
+          :linkedin "company/47-degrees-llc"}
  :languages #{"Scala" "Clojure" "Java" "Swift"}
  :included-projects #{"macroid"
                       "fetch"

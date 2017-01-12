@@ -88,6 +88,7 @@ Let's break it down:
 - `:social` is a map for specifying the handles in different social networks
  + `:twitter` contains your organization's Twitter handle (without the @)
  + `:facebook` contains your organization's Facebook handle
+ + `:linkedin` contains your LinkedIn handle
 - `:languages` is the set with the languages you are interested in filtering by
 - `:included-projects` is the set with the projects you are interested in having on the site
 - `:extra-repos` allows you to add extra repos out of the org (maps with `:user` and `:repo`)
