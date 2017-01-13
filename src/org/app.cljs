@@ -17,7 +17,11 @@
 (defn init!
   []
   (let [state (atom (read-state!))
-        {:keys [organization token extra-repos] :as config} (:config @state)]
+        {:keys [organization token extra-repos analytics] :as config} (:config @state)]
+    ;; turn on analytics
+    (when analytics
+      (js/ga "create" analytics "auto")
+      (js/ga "send" "pageview"))
     ;; mount app
     (rum/mount (org/app state) (js/document.getElementById "app"))
     ;; fetch fresh data

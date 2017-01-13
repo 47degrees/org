@@ -67,6 +67,7 @@ and its pretty straightforward, here is an example with the defaults:
                  "github4s" "https://rawgit.com/47deg/microsites/cdn//github4s/navbar_brand.png"
                  "scalacheck-datetime" "https://rawgit.com/47deg/microsites/cdn//scalacheck-datetime/navbar_brand.png"}
  :token "a-github-token"
+ :analytics "a-google-analytics-token"
  :footer {:acknowledgment true}
  :style {:primary-color "#F44336"
          :header {:background "linear-gradient(0deg, rgba(30, 39, 53, 0.88), rgba(30, 39, 53, 0.88)), url(\"../img/header-background.jpg\") no-repeat center center"}
@@ -100,6 +101,7 @@ Let's break it down:
  + `:font` configures different CSS font settings such as the URL and the heading or base typographies
 - `:footer` is for settings related to the footer
  + `:acknowledgment` is a boolean flag for toggling the "by 47 Degrees" acknowledgment in the footer
+- `:analytics` is an optional string containing a Google analytics token
  
 ### Preview your site
 
