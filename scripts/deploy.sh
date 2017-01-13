@@ -6,7 +6,7 @@ git config --global user.email "al.gg@47deg.com"
 
 # Pull latest version of published subtree
 git checkout master
-git subtree pull --prefix=docs https://47deg:$GITHUB_API_KEY@github.com/47deg/47deg.github.io.git master
+git subtree pull --prefix=docs --message="[skip ci] Update subtree" https://47deg:$GITHUB_API_KEY@github.com/47deg/47deg.github.io.git master
 
 # Build & Commit built site
 lein run
