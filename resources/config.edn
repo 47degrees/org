@@ -4,7 +4,7 @@
         :src "img/nav-brand.png"}
  :links [{:text "Blog" :href "http://47deg.com/blog"}
          {:text "Talks" :href "http://47deg.com/presentations/"}
-         {:text "Contact" :href "mailto:hello@47deg.com"}]
+         {:text "Contact" :href "http://47deg.com/contact"}]
  :social {:twitter "47deg"
           :facebook "47degreesLLC"}
  :languages #{"Scala" "Clojure" "Java" "Swift"}
