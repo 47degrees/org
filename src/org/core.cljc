@@ -282,6 +282,10 @@
   [handle]
   (str "http://facebook.com/" handle))
 
+(defn linkedin-url
+  [handle]
+  (str "http://linkedin.com/" handle))
+
 (rum/defc footer
   [{:keys [organization organization-name links social footer]}]
   [:footer#site-footer
@@ -310,7 +314,11 @@
       (when-let [fb (:facebook social)]
         [:li
          [:a {:href (facebook-url fb)}
-          [:i.fa.fa-facebook]]])]]]])
+          [:i.fa.fa-facebook]]])
+      (when-let [linkedin (:linkedin social)]
+        [:li
+         [:a {:href (linkedin-url linkedin)}
+          [:i.fa.fa-linkedin]]])]]]])
 
 (rum/defc app < rum/reactive
   [state]
