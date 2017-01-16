@@ -28,9 +28,10 @@
                  "scala-exercises" "img/scala-exercises-dark.png"
                  "scalacheck-datetime" "https://rawgit.com/47deg/microsites/cdn//scalacheck-datetime/navbar_brand.png"}
  :token "0ea220b5c8de1be060c132e24771ed74537821be"
+ :analytics "UA-18433785-13"
  :style {:primary-color "#F44336"
          :header {:background "linear-gradient(0deg, rgba(30, 39, 53, 0.88), rgba(30, 39, 53, 0.88)), url(\"img/header-background.jpg\") no-repeat center center"
-                  :background-size "cover"}
+                  :backgroundSize "cover"}
          :font {:url "https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Poppins:300,400"
                 :base "'Open sans', sans-serif"
                 :headings "'Poppins', sans-serif"

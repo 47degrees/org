@@ -43,9 +43,10 @@
     [:div {:id "app"
            :data-state (str->base64 (pr-str @state))}
      (org/app state)]
+    [:script {:src "/js/google-analytics.js" :type "text/javascript"}]
     [:script {:src (str js-root "org.js") :type "text/javascript"}]]])
 
-(defn compile-css
+(defn compile-sass
   [config]
   (let [{:keys [primary-color
                 font]} config
@@ -87,17 +88,19 @@
                :optimizations :advanced
                :verbose true}))
 
-(defn render-static-page
-  [repos {:keys [organization token] :as config}]
+(defn render-page
+  [repos {:keys [organization token] :as config} js-root]
   (let [state (atom (assoc st/default-state :repos repos :config config))
-        component (page state {:js-root ""})]
+        component (page state {:js-root js-root})]
     (rum/render-html component)))
+
+(defn render-static-page
+  [repos config]
+  (render-page repos config ""))
 
 (defn render-index-page
   [repos {:keys [organization token] :as config}]
-  (let [state (atom (assoc st/default-state :repos repos :config config))
-        component (page state {:js-root "js/compiled/"})]
-    (rum/render-static-markup component)))
+  (render-page repos config "js/compiled/"))
 
 (defn read-config!
   [path]
@@ -108,19 +111,32 @@
   @(c/fetch-org-and-extra-repos! organization {:token token
                                                :extra-repos extra-repos}))
 
+(defn make-dirs!
+  [js css]
+  (sh "mkdir" "-p" js)
+  (sh "mkdir" "-p" css))
+
+(defn generate-index!
+  [file repos config]
+  (spit file (render-static-page repos config)))
+
+(defn compile-css!
+  [file style-config]
+  (sh "touch" file)
+  (spit file (compile-sass style-config)))
+
 (defn -main
   [& args]
   (let [config (read-config! "config.edn")
-        repos (fetch-data! config)
-        html (render-static-page repos config)
-        style-config (get config :style)
-        css (compile-css style-config)]
-    (sh "mkdir" "-p" "docs/js")
-    (sh "mkdir" "-p" "docs/css")
-    (println "Compiling ClojureScript..")
+        repos (fetch-data! config)]
+    (make-dirs! "docs/js" "docs/css")
+    ;; Compile CLJS
     (compile-cljs! config)
-    (spit "docs/index.html" html)
-    (sh "touch" "docs/css/style.css")
-    (sh "cp" "-R" "resources/public/img" "docs")
-    (spit "docs/css/style.css" css)))
+    ;; Generate HTML
+    (generate-index! "docs/index.html" repos config)
+    ;; Generate CSS
+    (compile-css! "docs/css/style.css" (:style config))
+    ;; Copy static assets
+    (sh "cp" "resources/public/js/google-analytics.js" "docs/js/")
+    (sh "cp" "-R" "resources/public/img" "docs")))
 
