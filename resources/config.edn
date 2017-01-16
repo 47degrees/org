@@ -23,14 +23,14 @@
                       "case-classy"
                       "second-bridge"}
  :extra-repos [{:user "scala-exercises" :repo "scala-exercises"}]
- :project-logos {"fetch" "http://47deg.github.io/fetch/img/navbar_brand.png"
-                 "mvessel" "http://47deg.github.io/mvessel/img/navbar_brand.png"
-                 "github4s" "http://47deg.github.io/github4s/img/navbar_brand.png"
+ :project-logos {"fetch" "//47deg.github.io/fetch/img/navbar_brand.png"
+                 "mvessel" "//47deg.github.io/mvessel/img/navbar_brand.png"
+                 "github4s" "//47deg.github.io/github4s/img/navbar_brand.png"
                  "scala-exercises" "img/scala-exercises-dark.png"
-                 "scalacheck-datetime" "http://47deg.github.io/scalacheck-datetime/img/navbar_brand.png"
-                 "macroid" "http://47deg.github.io/macroid/img/navbar_brand.png"
-                 "sbt-microsites" "http://47deg.github.io/sbt-microsites/img/navbar_brand.png"
-                 "second-bridge" "http://47deg.github.io/second-bridge/img/brand_second_bridge.svg"}
+                 "scalacheck-datetime" "//47deg.github.io/scalacheck-datetime/img/navbar_brand.png"
+                 "macroid" "//47deg.github.io/macroid/img/navbar_brand.png"
+                 "sbt-microsites" "//47deg.github.io/sbt-microsites/img/navbar_brand.png"
+                 "second-bridge" "//47deg.github.io/second-bridge/img/brand_second_bridge.svg"}
  :token "0ea220b5c8de1be060c132e24771ed74537821be"
  :analytics "UA-18433785-13"
  :style {:primary-color "#F44336"
