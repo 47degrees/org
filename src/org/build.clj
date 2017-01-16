@@ -1,5 +1,7 @@
 (ns org.build
   (:require
+   [clojure.spec :as s]
+   [org.config :as cfg]
    [org.state :as st]
    [org.core :as org]
    [org.client :as c]
@@ -129,14 +131,19 @@
   [& args]
   (let [config (read-config! "config.edn")
         repos (fetch-data! config)]
-    (make-dirs! "docs/js" "docs/css")
-    ;; Compile CLJS
-    (compile-cljs! config)
-    ;; Generate HTML
-    (generate-index! "docs/index.html" repos config)
-    ;; Generate CSS
-    (compile-css! "docs/css/style.css" (:style config))
-    ;; Copy static assets
-    (sh "cp" "resources/public/js/google-analytics.js" "docs/js/")
-    (sh "cp" "-R" "resources/public/img" "docs")))
+    (if-not (s/valid? :org/config config)
+      (do
+        (println "Invalid configuration: " (s/explain-str :org/config config))
+        (System/exit 1))
+      (do
+        (make-dirs! "docs/js" "docs/css")
+        ;; Compile CLJS
+        (compile-cljs! config)
+        ;; Generate HTML
+        (generate-index! "docs/index.html" repos config)
+        ;; Generate CSS
+        (compile-css! "docs/css/style.css" (:style config))
+        ;; Copy static assets
+        (sh "cp" "resources/public/js/google-analytics.js" "docs/js/")
+        (sh "cp" "-R" "resources/public/img" "docs")))))
 
