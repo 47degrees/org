@@ -39,7 +39,7 @@ $ git push -u origin raw
 ### Edit the configuration
 
 For creating your own site you simple have to provide a configuration file under `resources/config.edn`. The file uses [edn syntax](https://github.com/edn-format/edn)
-and its pretty straightforward, here is an example with the defaults:
+and its pretty straightforward, here is an example with the defaults (see `resources/config.edn.example`):
 
 ```clojure
 {:organization "47deg"

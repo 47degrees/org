@@ -1,14 +1,12 @@
 language: clojure
-
 before_install:
- - gem install sass
-
+- openssl aes-256-cbc -K $encrypted_76a998f65715_key -iv $encrypted_76a998f65715_iv
+  -in resources/config.edn.enc -out resources/config.edn -d
+- gem install sass
 branches:
   only:
-   - master
-
+  - master
 jdk:
- - oraclejdk8
-
+- oraclejdk8
 after_success:
- - ./scripts/deploy.sh
+- "./scripts/deploy.sh"
