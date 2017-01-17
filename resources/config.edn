@@ -30,7 +30,8 @@
                  "scalacheck-datetime" "//47deg.github.io/scalacheck-datetime/img/navbar_brand.png"
                  "macroid" "//47deg.github.io/macroid/img/navbar_brand.png"
                  "sbt-microsites" "//47deg.github.io/sbt-microsites/img/navbar_brand.png"
-                 "second-bridge" "//47deg.github.io/second-bridge/img/brand_second_bridge.svg"}
+                 "second-bridge" "//47deg.github.io/second-bridge/img/brand_second_bridge.svg"
+                 "freestyle" "//47deg.github.io/freestyle/img/navbar_brand.png"}
  :token "0ea220b5c8de1be060c132e24771ed74537821be"
  :analytics "UA-18433785-13"
  :style {:primary-color "#F44336"
