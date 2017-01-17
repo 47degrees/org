@@ -8,12 +8,12 @@
 
   :min-lein-version "2.7.1"
 
-  :dependencies [[org.clojure/clojure "1.8.0"]
+  :dependencies [[org.clojure/clojure "1.9.0-alpha14"]
                  [org.clojure/clojurescript "1.9.229"]
                  [org.clojure/test.check "0.9.0"]
                  [org.clojure/data.json "0.2.6"]
                  [rum "0.10.5"]
-                 [aleph "0.4.1"]
+                 [aleph "0.4.2-alpha12"]
                  [funcool/httpurr "0.6.1"]
                  [funcool/cuerdas "1.0.1"]
                  [funcool/urania "0.1.1"]

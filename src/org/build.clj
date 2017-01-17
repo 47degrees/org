@@ -1,5 +1,7 @@
 (ns org.build
   (:require
+   [clojure.spec :as s]
+   [org.config :as cfg]
    [org.state :as st]
    [org.core :as org]
    [org.client :as c]
@@ -125,10 +127,10 @@
   (sh "touch" file)
   (spit file (compile-sass style-config)))
 
-(defn -main
-  [& args]
-  (let [config (read-config! "config.edn")
-        repos (fetch-data! config)]
+(defn generate-site!
+  [config]
+  (let [repos (fetch-data! config)]
+    ;; Make dir structure
     (make-dirs! "docs/js" "docs/css")
     ;; Compile CLJS
     (compile-cljs! config)
@@ -139,4 +141,12 @@
     ;; Copy static assets
     (sh "cp" "resources/public/js/google-analytics.js" "docs/js/")
     (sh "cp" "-R" "resources/public/img" "docs")))
+
+(defn -main
+  [& args]
+  (let [config (read-config! "config.edn")]
+    (when-not (s/valid? :org/config config)
+      (println "Invalid configuration: " (s/explain-str :org/config config))
+      (System/exit 1))
+    (generate-site! config)))
 
