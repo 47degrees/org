@@ -12,7 +12,7 @@
  :included-projects #{"macroid"
                       "fetch"
                       "sbt-microsites"
-                      "scalacheck-datetime"
+                      "scalacheck-toolbox"
                       "scala-exercises"
                       "github4s"
                       "org"
@@ -21,17 +21,21 @@
                       "freestyle"
                       "mvessel"
                       "case-classy"
-                      "second-bridge"}
+                      "second-bridge"
+                      "nine-cards-v2"
+                      "LambdaTest"}
  :extra-repos [{:user "scala-exercises" :repo "scala-exercises"}]
  :project-logos {"fetch" "//47deg.github.io/fetch/img/navbar_brand.png"
                  "mvessel" "//47deg.github.io/mvessel/img/navbar_brand.png"
                  "github4s" "//47deg.github.io/github4s/img/navbar_brand.png"
                  "scala-exercises" "img/scala-exercises-dark.png"
-                 "scalacheck-datetime" "//47deg.github.io/scalacheck-datetime/img/navbar_brand.png"
+                 "scalacheck-toolbox" "//47deg.github.io/scalacheck-toolbox/img/navbar_brand.png"
                  "macroid" "//47deg.github.io/macroid/img/navbar_brand.png"
                  "sbt-microsites" "//47deg.github.io/sbt-microsites/img/navbar_brand.png"
                  "second-bridge" "//47deg.github.io/second-bridge/img/brand_second_bridge.svg"
-                 "freestyle" "//47deg.github.io/freestyle/img/navbar_brand.png"}
+                 "freestyle" "//47deg.github.io/freestyle/img/navbar_brand.png"
+                 "LambdaTest" "//47deg.github.io/LambdaTest/img/navbar_brand.png"
+                 "nine-cards-v2" "//47deg.github.io/nine-cards-v2/img/navbar_brand.png"}
  :token "0ea220b5c8de1be060c132e24771ed74537821be"
  :analytics "UA-18433785-13"
  :style {:primary-color "#F44336"
