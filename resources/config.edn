@@ -23,6 +23,7 @@
                       "case-classy"
                       "second-bridge"
                       "nine-cards-v2"
+                      "nine-cards-backend"
                       "LambdaTest"}
  :extra-repos [{:user "scala-exercises" :repo "scala-exercises"}]
  :project-logos {"fetch" "//47deg.github.io/fetch/img/navbar_brand.png"
