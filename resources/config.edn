@@ -36,7 +36,8 @@
                  "second-bridge" "//47deg.github.io/second-bridge/img/brand_second_bridge.svg"
                  "freestyle" "//47deg.github.io/freestyle/img/navbar_brand.png"
                  "LambdaTest" "//47deg.github.io/LambdaTest/img/navbar_brand.png"
-                 "nine-cards-v2" "//47deg.github.io/nine-cards-v2/img/navbar_brand.png"}
+                 "nine-cards-v2" "//47deg.github.io/nine-cards-v2/img/navbar_brand.png"
+                 "nine-cards-backend" "//47deg.github.io/nine-cards-v2/img/navbar_brand.png"}
  :token "0ea220b5c8de1be060c132e24771ed74537821be"
  :analytics "UA-18433785-13"
  :style {:primary-color "#F44336"
