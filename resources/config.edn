@@ -24,7 +24,8 @@
                       "second-bridge"
                       "nine-cards-v2"
                       "nine-cards-backend"
-                      "LambdaTest"}
+                      "LambdaTest"
+                      "iota"}
  :extra-repos [{:user "scala-exercises" :repo "scala-exercises"}]
  :project-logos {"fetch" "//47deg.github.io/fetch/img/navbar_brand.png"
                  "mvessel" "//47deg.github.io/mvessel/img/navbar_brand.png"
