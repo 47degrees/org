@@ -3,10 +3,6 @@ language: clojure
 before_install:
  - gem install sass
 
-branches:
-  only:
-   - master
-
 jdk:
  - oraclejdk8
 
