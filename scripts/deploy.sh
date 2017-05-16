@@ -2,7 +2,7 @@
 
 # Configure git
 git config --global user.name "Travis CI"
-git config --global user.email "al.gg@47deg.com"
+git config --global user.email "domingo.v@47deg.com"
 
 # Pull latest version of published subtree
 git checkout master
