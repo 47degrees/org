@@ -1,7 +1,8 @@
 #!/bin/sh
 
 # Configure git
-git config --global user.name "anamariamv"
+
+git config --global user.name "Travis CI"
 git config --global user.email "ana@47deg.com"
 
 # Pull latest version of published subtree
