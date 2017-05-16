@@ -24,7 +24,8 @@
                       "second-bridge"
                       "nine-cards-v2"
                       "nine-cards-backend"
-                      "LambdaTest"}
+                      "LambdaTest"
+                      "iota"}
  :extra-repos [{:user "scala-exercises" :repo "scala-exercises"}]
  :project-logos {"fetch" "//47deg.github.io/fetch/img/navbar_brand.png"
                  "mvessel" "//47deg.github.io/mvessel/img/navbar_brand.png"
@@ -34,7 +35,7 @@
                  "macroid" "//47deg.github.io/macroid/img/navbar_brand.png"
                  "sbt-microsites" "//47deg.github.io/sbt-microsites/img/navbar_brand.png"
                  "second-bridge" "//47deg.github.io/second-bridge/img/brand_second_bridge.svg"
-                 "freestyle" "//47deg.github.io/freestyle/img/navbar_brand.png"
+                 "freestyle" "img/navbar_freestyle.png"
                  "LambdaTest" "//47deg.github.io/LambdaTest/img/navbar_brand.png"
                  "nine-cards-v2" "//47deg.github.io/nine-cards-v2/img/navbar_brand.png"
                  "nine-cards-backend" "//47deg.github.io/nine-cards-v2/img/navbar_brand.png"
