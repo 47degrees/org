@@ -26,7 +26,8 @@
                       "nine-cards-backend"
                       "LambdaTest"
                       "iota"}
- :extra-repos [{:user "scala-exercises" :repo "scala-exercises"}]
+ :extra-repos [{:user "scala-exercises" :repo "scala-exercises"}
+               {:user "frees-io" :repo "freestyle"}]
  :project-logos {"fetch" "//47deg.github.io/fetch/img/navbar_brand.png"
                  "mvessel" "//47deg.github.io/mvessel/img/navbar_brand.png"
                  "github4s" "//47deg.github.io/github4s/img/navbar_brand.png"
