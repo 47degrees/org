@@ -41,7 +41,7 @@
                  "nine-cards-v2" "//47deg.github.io/nine-cards-v2/img/navbar_brand.png"
                  "nine-cards-backend" "//47deg.github.io/nine-cards-v2/img/navbar_brand.png"
                  "case-classy" "//47deg.github.io/case-classy/img/navbar_brand.png"}
- :token "3365a96ff36b39d267e6096b3e0f1ae4867f2a69"
+ :token "7d36088b9d376ef0ff16fcf397f52e6b77f94e9c"
  :analytics "UA-18433785-13"
  :style {:primary-color "#F44336"
          :header {:background "linear-gradient(0deg, rgba(30, 39, 53, 0.88), rgba(30, 39, 53, 0.88)), url(\"img/header-background.jpg\") no-repeat center center"
