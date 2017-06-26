@@ -18,7 +18,7 @@
                  [funcool/cuerdas "1.0.1"]
                  [funcool/urania "0.1.1"]
                  [funcool/hodgepodge "0.1.4"]
-                 [funcool/promesa "1.5.0"]
+                 [funcool/promesa "1.8.1"]
                  [cljsjs/google-analytics "2015.04.13-0"]]
 
   :plugins [[lein-figwheel "0.5.8"]
