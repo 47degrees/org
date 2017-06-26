@@ -16,7 +16,7 @@
                       "scala-exercises"
                       "github4s"
                       "org"
-                      "sbt-catalysts-extras"
+                      "sbt-org-policies"
                       "sbot"
                       "freestyle"
                       "mvessel"
@@ -41,7 +41,7 @@
                  "nine-cards-v2" "//47deg.github.io/nine-cards-v2/img/navbar_brand.png"
                  "nine-cards-backend" "//47deg.github.io/nine-cards-v2/img/navbar_brand.png"
                  "case-classy" "//47deg.github.io/case-classy/img/navbar_brand.png"}
- :token "448dbd449c2cc73052edd2587c54ce4f3d3ba3a9"
+ :token "cb47c4423aecc8bbaff9c3dfe6f059ffcc978e64"
  :analytics "UA-18433785-13"
  :style {:primary-color "#F44336"
          :header {:background "linear-gradient(0deg, rgba(30, 39, 53, 0.88), rgba(30, 39, 53, 0.88)), url(\"img/header-background.jpg\") no-repeat center center"
