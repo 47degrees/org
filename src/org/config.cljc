@@ -47,7 +47,7 @@
 
 ;; Tokens
 
-(s/def :org/token string?)
+(s/def :org/token-name string?)
 (s/def :org/analytics string?)
 
 ;; Style
@@ -96,7 +96,7 @@
                                     :org/links
                                     :org/languages
                                     :org/included-projects
-                                    :org/token
+                                    :org/token-name
                                     :org/style]
                            :opt-un [:org/organization-name
                                     :org/social

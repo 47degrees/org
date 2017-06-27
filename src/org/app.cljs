@@ -17,7 +17,7 @@
 (defn init!
   []
   (let [state (atom (read-state!))
-        {:keys [organization token extra-repos analytics] :as config} (:config @state)]
+        {:keys [organization token-name extra-repos analytics] :as config} (:config @state)]
     ;; turn on analytics
     (when analytics
       (js/ga "create" analytics "auto")

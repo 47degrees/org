@@ -66,7 +66,7 @@ and its pretty straightforward, here is an example with the defaults:
                  "mvessel" "https://rawgit.com/47deg/microsites/cdn//mvessel/navbar_brand.png"
                  "github4s" "https://rawgit.com/47deg/microsites/cdn//github4s/navbar_brand.png"
                  "scalacheck-datetime" "https://rawgit.com/47deg/microsites/cdn//scalacheck-datetime/navbar_brand.png"}
- :token "a-github-token"
+ :token-name "an-env-variable-with-a-github-api-key"
  :analytics "a-google-analytics-token"
  :footer {:acknowledgment true}
  :style {:primary-color "#F44336"
@@ -95,7 +95,7 @@ Let's break it down:
 - `:included-projects` is the set with the projects you are interested in having on the site
 - `:extra-repos` allows you to add extra repos out of the org (maps with `:user` and `:repo`)
 - `:project-logos` is a map from project names to the URL where their logo can be found, libraries without logos will show a placeholder
-- `:token` is a string containing the GitHub token required to use the GitHub API
+- `:token-name` is a string with the name of an environment variable containing a GitHub token required to use the GitHub API
 - `:style` is a map with style configuration
  + `:primary-color` sets the primary color of the webpage
  + `:header` controls the styles of the header, only `:background` is supported for now
