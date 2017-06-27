@@ -91,7 +91,7 @@
                :verbose true}))
 
 (defn render-page
-  [repos {:keys [organization token] :as config} js-root]
+  [repos {:keys [organization token-name] :as config} js-root]
   (let [state (atom (assoc st/default-state :repos repos :config config))
         component (page state {:js-root js-root})]
     (rum/render-html component)))
@@ -101,7 +101,7 @@
   (render-page repos config ""))
 
 (defn render-index-page
-  [repos {:keys [organization token] :as config}]
+  [repos {:keys [organization token-name] :as config}]
   (render-page repos config "js/compiled/"))
 
 (defn read-config!
@@ -109,8 +109,8 @@
   (clojure.edn/read-string (slurp (clojure.java.io/resource path))))
 
 (defn fetch-data!
-  [{:keys [organization token extra-repos]}]
-  @(c/fetch-org-and-extra-repos! organization {:token token
+  [{:keys [organization token-name extra-repos]}]
+  @(c/fetch-org-and-extra-repos! organization {:token-name token-name
                                                :extra-repos extra-repos}))
 
 (defn make-dirs!
@@ -120,7 +120,7 @@
 
 (defn generate-index!
   [file repos config]
-  (spit file (render-static-page repos config)))
+   (spit file (render-static-page repos config)))
 
 (defn compile-css!
   [file style-config]
