@@ -1,6 +1,7 @@
 language: clojure
 
 before_install:
+ - gem update --system 2.4.1
  - gem install sass
  
 branches:
