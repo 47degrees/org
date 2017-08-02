@@ -251,8 +251,8 @@ select {
     #site-main .filter .tag {
       float: left;
       display: block;
-      margin-right: 2.35765%;
-      width: 65.88078%; }
+      margin-right: 2.3576520234%;
+      width: 65.8807826589%; }
       #site-main .filter .tag ul li {
         display: inline-block;
         margin-right: 12px; }
@@ -269,8 +269,8 @@ select {
     #site-main .filter .order-by {
       float: left;
       display: block;
-      margin-right: 2.35765%;
-      width: 31.76157%; }
+      margin-right: 2.3576520234%;
+      width: 31.7615653177%; }
       #site-main .filter .order-by .dropdown-select {
         position: relative;
         float: right; }
@@ -337,7 +337,7 @@ select {
       #site-main .filter .order-by {
         float: left;
         display: block;
-        margin-right: 2.35765%;
+        margin-right: 2.3576520234%;
         width: 100%; }
         #site-main .filter .tag:last-child,
         #site-main .filter .order-by:last-child {
@@ -359,8 +359,8 @@ select {
     transition: all 300ms ease;
     float: left;
     display: block;
-    margin-right: 2.35765%;
-    width: 31.76157%; }
+    margin-right: 2.3576520234%;
+    width: 31.7615653177%; }
     #site-main .project-list .project-info:last-child {
       margin-right: 0; }
     #site-main .project-list .project-info:nth-child(3n) {
@@ -371,7 +371,7 @@ select {
       #site-main .project-list .project-info {
         float: left;
         display: block;
-        margin-right: 2.35765%;
+        margin-right: 2.3576520234%;
         width: 100%; }
         #site-main .project-list .project-info:last-child {
           margin-right: 0; } }
@@ -446,15 +446,15 @@ select {
   #site-footer .navigation {
     float: left;
     display: block;
-    margin-right: 2.35765%;
-    width: 74.41059%; }
+    margin-right: 2.3576520234%;
+    width: 74.4105869942%; }
     #site-footer .navigation:last-child {
       margin-right: 0; }
     @media (max-width: 768px) {
       #site-footer .navigation {
         float: left;
         display: block;
-        margin-right: 2.35765%;
+        margin-right: 2.3576520234%;
         width: 100%;
         margin-bottom: 20px; }
         #site-footer .navigation:last-child {
@@ -470,8 +470,8 @@ select {
     text-align: right;
     float: left;
     display: block;
-    margin-right: 2.35765%;
-    width: 23.23176%; }
+    margin-right: 2.3576520234%;
+    width: 23.2317609825%; }
     #site-footer .social:last-child {
       margin-right: 0; }
     @media (max-width: 768px) {
@@ -479,7 +479,7 @@ select {
         text-align: left;
         float: left;
         display: block;
-        margin-right: 2.35765%;
+        margin-right: 2.3576520234%;
         width: 100%; }
         #site-footer .social:last-child {
           margin-right: 0; } }
@@ -506,16 +506,16 @@ select {
 .github-stats {
   float: left;
   display: block;
-  margin-right: 2.35765%;
-  width: 65.88078%;
-  margin-left: 17.05961%; }
+  margin-right: 2.3576520234%;
+  width: 65.8807826589%;
+  margin-left: 17.0596086706%; }
   .github-stats:last-child {
     margin-right: 0; }
   @media (max-width: 768px) {
     .github-stats {
       float: left;
       display: block;
-      margin-right: 2.35765%;
+      margin-right: 2.3576520234%;
       width: 100%;
       margin-left: 0%; }
       .github-stats:last-child {
