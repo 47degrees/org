@@ -1,7 +1,7 @@
 language: clojure
 
 before_install:
- - gem update --system 2.4.1
+ - rvm install 2.0.0
  - gem install sass
  
 branches:
