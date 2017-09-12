@@ -8,7 +8,7 @@
  :social {:twitter "47deg"
           :facebook "47degreesLLC"
           :linkedin "company/47-degrees-llc"}
- :languages #{"Scala" "Clojure" "Java" "Swift"}
+ :languages #{"Scala" "Clojure" "Java" "Swift" "Kotlin"}
  :included-projects #{"macroid"
                       "fetch"
                       "sbt-microsites"
