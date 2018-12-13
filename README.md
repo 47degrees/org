@@ -136,11 +136,11 @@ Congratulations, you just built your organization's open source project site!
 
 For compiling the SASS styles into CSS, run the following command at the root of the directory:
 
-    sass sass/style.scss:resources/public/style.css
+    sass sass/style.scss:resources/public/css/style.css
 
 If you want sass to be automatically recompiled when modifying .scss files add the `--watch` flag:
 
-    sass --watch sass/style.scss:resources/public/style.css
+    sass --watch sass/style.scss:resources/public/css/style.css
 
 ## License
 
