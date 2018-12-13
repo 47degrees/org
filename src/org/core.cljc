@@ -34,6 +34,11 @@
   (let [langs (into [] (all-languages repos))]
     (reverse (sort-by #(count (filter-by-language % repos)) langs))))
 
+(defn sum-contributors
+  [repos]
+  (count
+    (into #{} (mapcat :contributors) repos)))
+
 (rum/defc link-list
   [links]
   [:ul
@@ -70,10 +75,10 @@
   [:div.github-stats
    [:ul
     [:li.contributors
-     [:span (sum-by :contributors repos)]
+     [:span (sum-contributors repos)]
      [:span [:span.octicon.octicon-person] "contributors"]]
     [:li.stars
-     [:span (sum-by :stars repos)]
+     [:span (transduce (map :stars) + repos)]
      [:span [:span.octicon.octicon-star] "stars"]]
     [:li.repositories
      [:span (count repos)]
@@ -203,7 +208,7 @@
       [:li
        {:key "contributors"}
        [:span.octicon.octicon-person]
-       [:span contributors]]]]))
+       [:span (count contributors)]]]]))
 
 (rum/defc search < rum/reactive
   [state]

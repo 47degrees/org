@@ -1,8 +1,10 @@
 (ns org.config
   #?(:clj
-     (:require [clojure.spec :as s])
+     (:require [cuerdas.core :as str]
+               [clojure.spec :as s])
      :cljs
-     (:require [cljs.spec :as s])))
+     (:require [cuerdas.core :as str]
+               [cljs.spec :as s])))
 
 ;; Organization
 
@@ -48,6 +50,7 @@
 ;; Tokens
 
 (s/def :org/token-name string?)
+(s/def :org/token (s/and string? (complement str/blank?)))
 (s/def :org/analytics string?)
 
 ;; Style

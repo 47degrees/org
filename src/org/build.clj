@@ -109,8 +109,8 @@
   (clojure.edn/read-string (slurp (clojure.java.io/resource path))))
 
 (defn fetch-data!
-  [{:keys [organization token-name extra-repos]}]
-  @(c/fetch-org-and-extra-repos! organization {:token-name token-name
+  [{:keys [organization token extra-repos]}]
+  @(c/fetch-org-and-extra-repos! organization {:token token
                                                :extra-repos extra-repos}))
 
 (defn make-dirs!
@@ -144,9 +144,14 @@
 
 (defn -main
   [& args]
-  (let [config (read-config! "config.edn")]
+  (let [config (read-config! "config.edn")
+        token (get (System/getenv) (str (:token-name config)))
+        cfg-with-token (assoc config :token token)]
     (when-not (s/valid? :org/config config)
       (println "Invalid configuration: " (s/explain-str :org/config config))
       (System/exit 1))
-    (generate-site! config)))
+    (when-not (s/valid? :org/token token)
+      (println "Invalid token, you may have missed setting the environment variable " (str \` (:token-name config) \`))
+      (System/exit 1))
+    (generate-site! cfg-with-token)))
 
