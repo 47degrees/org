@@ -111,42 +111,33 @@
                     result))
                 (p/rejected (ex-info "Unsuccessful request" {:response resp})))))))
 
-(defn get-token
-  [token-name]
-  (let [token (get (System/getenv) (str token-name))]
-    token))
-
-(def get-token-memo (memoize get-token))
-
 (defn get-repo!
-  [user repo token-name]
-  (let [token (get-token-memo token-name)]
-    (let [req {:method :get
-               :url (repo-url user repo)
-               :headers (headers token)}
-          prom (http/send! client req)]
-      (p/then prom
-              (fn [resp]
-                (if (status/success? resp)
-                  (parse-repo-response resp)
-                  (p/rejected (ex-info "Unsuccessful request" {:response resp}))))))))
+  [user repo token]
+  (let [req {:method :get
+             :url (repo-url user repo)
+             :headers (headers token)}
+        prom (http/send! client req)]
+    (p/then prom
+            (fn [resp]
+              (if (status/success? resp)
+                (parse-repo-response resp)
+                (p/rejected (ex-info "Unsuccessful request" {:response resp})))))))
 
 (defn get-org-repos!
-  [org token-name]
-  (let [token (get-token-memo token-name)]
-    (let [req {:method :get
-               :url (org-repos-url org)
-               :query-string "type=public&per_page=100"
-               :headers (headers token)}
-          prom (http/send! client req)]
-      (p/then prom
-              (fn [resp]
-                (if (status/success? resp)
-                  (let [result (parse-repos-response resp)]
-                    (if (has-next? resp)
-                      (get-org-repos-next! token result resp)
-                      result))
-                  (p/rejected (ex-info "Unsuccessful request" {:response resp}))))))))
+  [org token]
+  (let [req {:method :get
+             :url (org-repos-url org)
+             :query-string "type=public&per_page=100"
+             :headers (headers token)}
+        prom (http/send! client req)]
+    (p/then prom
+            (fn [resp]
+              (if (status/success? resp)
+                (let [result (parse-repos-response resp)]
+                  (if (has-next? resp)
+                    (get-org-repos-next! token result resp)
+                    result))
+                (p/rejected (ex-info "Unsuccessful request" {:response resp})))))))
 
 (defn parse-languages-response
   [resp]
@@ -157,26 +148,25 @@
         (set (keys $))))
 
 (defn get-repo-languages!
-  [repo token-name]
-  (let [token (get-token-memo token-name)]
-    (let [req {:method :get
-               :url (get repo :languages-url)
-               :query-string "type=public"
-               :headers (headers token)}
-          prom (http/send! client req)]
-      (p/then  prom
-               (fn [resp]
-                 (if (status/success? resp)
-                   (parse-languages-response resp)
-                   (p/rejected (ex-info "Unsuccessful request" {:response resp}))))))))
+  [repo token]
+  (let [req {:method :get
+             :url (get repo :languages-url)
+             :query-string "type=public"
+             :headers (headers token)}
+        prom (http/send! client req)]
+    (p/then  prom
+             (fn [resp]
+               (if (status/success? resp)
+                 (parse-languages-response resp)
+                 (p/rejected (ex-info "Unsuccessful request" {:response resp})))))))
 
 (defn parse-contributors-response
   [resp]
   (as-> (:body resp) $
         #?(:clj
            (slurp $))
-        (j/json->clj $ {:keywordize? false :default []})
-        (count $)))
+        (j/json->clj $ {:keywordize? true :default []})
+        (map :id $)))
 
 (defn get-repo-contributors-next!
   [token contribs links]
@@ -186,7 +176,7 @@
         prom (http/send! client req)]
     (p/mapcat (fn [resp]
                 (if (status/success? resp)
-                  (let [result (+ contribs (parse-contributors-response resp))]
+                  (let [result (into contribs (parse-contributors-response resp))]
                     (if (has-next? resp)
                       (get-repo-contributors-next! token result (parse-links resp))
                       (p/resolved result)))
@@ -194,21 +184,20 @@
               prom)))
 
 (defn get-repo-contributors!
-  [repo token-name]
-  (let [token (get-token-memo token-name)]
-    (let [req {:method :get
-               :url (get repo :contributors-url)
-               :query-string "type=public&per_page=100"
-               :headers (headers token)}
-          prom (http/send! client req)]
-      (p/mapcat (fn [resp]
-                 (if (status/success? resp)
-                   (let [result (parse-contributors-response resp)]
-                     (if (has-next? resp)
-                       (get-repo-contributors-next! token result (parse-links resp))
-                       (p/resolved result)))
-                   (p/rejected (ex-info "Unsuccessful request" {:response resp}))))
-               prom))))
+  [repo token]
+  (let [req {:method :get
+             :url (get repo :contributors-url)
+             :query-string "type=public&per_page=100"
+             :headers (headers token)}
+        prom (http/send! client req)]
+    (p/mapcat (fn [resp]
+               (if (status/success? resp)
+                 (let [result (parse-contributors-response resp)]
+                   (if (has-next? resp)
+                     (get-repo-contributors-next! token result (parse-links resp))
+                     (p/resolved result)))
+                 (p/rejected (ex-info "Unsuccessful request" {:response resp}))))
+             prom)))
 
 ;; Data sources
 
@@ -216,29 +205,29 @@
   u/DataSource
   (-identity [_]
     [:repo [user repo]])
-  (-fetch [_ {:keys [token-name]}]
-    (get-repo! user repo token-name)))
+  (-fetch [_ {:keys [token]}]
+    (get-repo! user repo token)))
 
 (deftype Repos [org]
   u/DataSource
   (-identity [_]
     [:repos org])
-  (-fetch [_ {:keys [token-name]}]
-    (get-org-repos! org token-name)))
+  (-fetch [_ {:keys [token]}]
+    (get-org-repos! org token)))
 
 (deftype Languages [repo]
   u/DataSource
   (-identity [_]
     [:languages (:name repo)])
-  (-fetch [_ {:keys [token-name]}]
-    (get-repo-languages! repo token-name)))
+  (-fetch [_ {:keys [token]}]
+    (get-repo-languages! repo token)))
 
 (deftype Contributors [repo]
   u/DataSource
   (-identity [_]
     [:contributors (:name repo)])
-  (-fetch [_ {:keys [token-name]}]
-    (get-repo-contributors! repo token-name)))
+  (-fetch [_ {:keys [token]}]
+    (get-repo-contributors! repo token)))
 
 (defn- fetch-languages
   [repo]
@@ -272,12 +261,12 @@
           repos))))
 
 (defn fetch-org-and-extra-repos
-  [org {:keys [token-name extra-repos]}]
+  [org {:keys [token extra-repos]}]
   (u/collect [(fetch-org-repos org)
               (fetch-repos extra-repos)]))
 
 (defn fetch-org-and-extra-repos!
-  [org {:keys [token-name] :as config}]
-  (p/then (u/run! (fetch-org-and-extra-repos org config) {:env {:token-name token-name}})
+  [org {:keys [token] :as config}]
+  (p/then (u/run! (fetch-org-and-extra-repos org config) {:env {:token token}})
           (fn [[org-repos extra-repos]]
             (concat org-repos extra-repos))))
