@@ -18,8 +18,8 @@
   []
   (let [state (atom (read-state!))
         {:keys [organization token extra-repos analytics] :as config} (:config @state)]
-    ;; turn on analytics
-    (when analytics
+    ;; turn on analytics if configured
+    #_(when analytics
       (js/ga "create" analytics "auto")
       (js/ga "send" "pageview"))
     ;; mount app
