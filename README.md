@@ -121,14 +121,6 @@ You can create the static site under the `docs` directory by running:
 ```sh
 $ lein run
 ```
-
-After that, you may want to publish the `docs` directory to a branch so its served by GitHub.
-Assuming you want to push the `docs` directory as the content of the `master` branch, you can do:
-
-```sh
-git subtree push --prefix docs origin master
-```
-	
 	
 Congratulations, you just built your organization's open source project site!
 
