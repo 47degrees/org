@@ -144,6 +144,6 @@ If you want sass to be automatically recompiled when modifying .scss files add t
 
 ## License
 
-Copyright © 2014 FIXME
+Copyright (C) 2016-2019 47 Degrees. http://47deg.com
 
 Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
