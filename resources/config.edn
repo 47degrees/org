@@ -41,8 +41,8 @@
                  "second-bridge" "//47deg.github.io/second-bridge/img/brand_second_bridge.svg"
                  "freestyle" "img/navbar_freestyle.png"
                  "LambdaTest" "//47deg.github.io/LambdaTest/img/navbar_brand.png"
-                 "nine-cards-v2" "//47deg.github.io/nine-cards-v2/img/navbar_brand.png"
-                 "nine-cards-backend" "//47deg.github.io/nine-cards-v2/img/navbar_brand.png"
+                 "nine-cards-v2" "img/navbar_nine-cards.png"
+                 "nine-cards-backend" "img/navbar_nine-cards.png"
                  "case-classy" "//47deg.github.io/case-classy/img/navbar_brand.png"
                  "arrow" "img/navbar_arrow.png"}
  :token-name "GITHUB_API_KEY"
