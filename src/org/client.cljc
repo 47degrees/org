@@ -59,6 +59,7 @@
            name
            description
            owner
+           fork
            pushed_at
            html_url
            languages_url
@@ -68,6 +69,7 @@
            forks_count]}]
   {:id id
    :name name
+   :fork fork
    :description description
    :owner (get owner :login)
    :updated (parse-date pushed_at)
@@ -213,7 +215,8 @@
   (-identity [_]
     [:repos org])
   (-fetch [_ {:keys [token]}]
-    (get-org-repos! org token)))
+    (p/then (get-org-repos! org token)
+            #(filter (comp not :fork) %))))
 
 (deftype Languages [repo]
   u/DataSource
