@@ -26,7 +26,12 @@
                       "nine-cards-backend"
                       "LambdaTest"
                       "iota"
-                      "arrow"}
+                      "arrow"
+                      "bow"
+                      "mu"
+                      "droste"
+                      "skeuomorph"
+                      "compendium"}
  :extra-repos [{:user "scala-exercises" :repo "scala-exercises"}
                {:user "frees-io" :repo "freestyle"},
                {:user "frees-io" :repo "iota"},
