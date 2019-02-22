@@ -30,7 +30,12 @@
  :extra-repos [{:user "scala-exercises" :repo "scala-exercises"}
                {:user "frees-io" :repo "freestyle"},
                {:user "frees-io" :repo "iota"},
-               {:user "arrow-kt" :repo "arrow"}]
+               {:user "arrow-kt" :repo "arrow"}
+               {:user "bow-swift" :repo "bow"}
+               {:user "higherkindness" :repo "mu"}
+               {:user "higherkindness" :repo "droste"}
+               {:user "higherkindness" :repo "skeuomorph"}
+               {:user "higherkindness" :repo "compendium"}]
  :project-logos {"fetch" "//47deg.github.io/fetch/img/navbar_brand.png"
                  "mvessel" "//47deg.github.io/mvessel/img/navbar_brand.png"
                  "github4s" "//47deg.github.io/github4s/img/navbar_brand.png"
