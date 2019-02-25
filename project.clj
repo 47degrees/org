@@ -13,7 +13,7 @@
                  [org.clojure/spec.alpha "0.2.176"]
                  [org.clojure/data.json "0.2.6"]
                  [rum "0.11.3"]
-                 [aleph "0.4.2-alpha12"]
+                 [aleph "0.4.6"]
                  [funcool/httpurr "1.1.0"]
                  [funcool/cuerdas "2.0.5"]
                  [funcool/urania "0.1.1"]
