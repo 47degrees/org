@@ -8,9 +8,9 @@
 
   :min-lein-version "2.7.1"
 
-  :dependencies [[org.clojure/clojure "1.9.0-alpha14"]
-                 [org.clojure/clojurescript "1.9.229"]
-                 [org.clojure/test.check "0.9.0"]
+  :dependencies [[org.clojure/clojure "1.10.0"]
+                 [org.clojure/clojurescript "1.10.520"]
+                 [org.clojure/spec.alpha "0.2.176"]
                  [org.clojure/data.json "0.2.6"]
                  [rum "0.10.5"]
                  [aleph "0.4.2-alpha12"]

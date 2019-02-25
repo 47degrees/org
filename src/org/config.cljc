@@ -1,10 +1,10 @@
 (ns org.config
   #?(:clj
      (:require [cuerdas.core :as str]
-               [clojure.spec :as s])
+               [clojure.spec.alpha :as s])
      :cljs
      (:require [cuerdas.core :as str]
-               [cljs.spec :as s])))
+               [cljs.spec.alpha :as s])))
 
 ;; Organization
 

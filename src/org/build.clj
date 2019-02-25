@@ -1,6 +1,6 @@
 (ns org.build
   (:require
-   [clojure.spec :as s]
+   [clojure.spec.alpha :as s]
    [org.config :as cfg]
    [org.state :as st]
    [org.core :as org]
