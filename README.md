@@ -10,7 +10,7 @@ itself when the user visits the page.
 
 ## Creating your own site
 
-First and foremost, ensure you have [Leiningen](http://leiningen.org) and [Sass](http://sass-lang.com) installed.
+First and foremost, ensure you have [Leiningen](http://leiningen.org) and [sassc](https://github.com/sass/sassc) installed.
 
 ### Clone the repository
 
@@ -126,13 +126,10 @@ Congratulations, you just built your organization's open source project site!
 
 #### SASS compilation
 
-For compiling the SASS styles into CSS, run the following command at the root of the directory:
+For compiling the SASS styles into CSS you can run the following command at the root of the directory:
 
-    sass sass/style.scss:resources/public/css/style.css
+    sassc sass/style.scss > resources/public/css/style.css
 
-If you want sass to be automatically recompiled when modifying .scss files add the `--watch` flag:
-
-    sass --watch sass/style.scss:resources/public/css/style.css
 
 ## License
 

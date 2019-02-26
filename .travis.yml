@@ -1,7 +1,7 @@
 language: clojure
 
 before_install:
- - gem install sass
+ - sudo apt-get install -y sassc
  
 branches:
   only:

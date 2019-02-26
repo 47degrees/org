@@ -59,9 +59,7 @@
         {:keys [light
                 regular
                 semi-bold
-                bold]} sizes
-        temp "temp"
-        tempsass (str temp ".scss")]
+                bold]} sizes]
     (let [sass (str/<<
                 "$brand-primary: ~{primary-color};"
                 ; Font
@@ -75,12 +73,10 @@
                 "$font-bold: ~{bold};"
                 ; Import default styles
                 "@import 'style.scss';")
-          tempsass "temp.scss"
-          _ (spit tempsass sass)
-          ; NOTE: not passing this via stdin since it behaves differently than when compiling a file
-          run (sh "sass" "--sourcemap=none" "-Isass" tempsass)]
-      (sh "rm" tempsass)
-      (:out run))))
+          run (sh "sassc" "--stdin" :in sass :dir "sass")]
+      (if (= (:exit run) 0)
+        (:out run)
+        (throw (Exception. (str "Couldn't compile sass: " (:err run))))))))
 
 (defn compile-cljs!
   [config]
