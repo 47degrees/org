@@ -6,7 +6,8 @@
    [org.state :as st]
    [clojure.set :as set]
    [promesa.core :as p]
-   [rum.core :as rum]))
+   [rum.core :as rum]
+   [cljsjs.google-analytics]))
 
 (defn read-state!
   []
@@ -19,7 +20,7 @@
   (let [state (atom (read-state!))
         {:keys [organization token extra-repos analytics] :as config} (:config @state)]
     ;; turn on analytics if configured
-    #_(when analytics
+    (when analytics
       (js/ga "create" analytics "auto")
       (js/ga "send" "pageview"))
     ;; mount app

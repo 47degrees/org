@@ -19,7 +19,7 @@
                  [funcool/urania "0.1.1"]
                  [funcool/hodgepodge "0.1.4"]
                  [funcool/promesa "2.0.0"]
-                 [cljsjs/google-analytics "2015.04.13-0"]]
+                 [cljsjs/google-analytics "2017.09.21-0"]]
 
   :plugins [[lein-figwheel "0.5.8"]
             [hiccup-bridge "1.0.1"]
