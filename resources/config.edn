@@ -8,7 +8,7 @@
  :social {:twitter "47deg"
           :facebook "47degreesLLC"
           :linkedin "company/47-degrees-llc"}
- :languages #{"Scala" "Clojure" "Java" "Swift" "Kotlin"}
+ :languages #{"Scala" "Clojure" "Java" "Swift" "Kotlin" "Haskell"}
  :included-projects #{"macroid"
                       "fetch"
                       "sbt-microsites"
@@ -31,7 +31,8 @@
                       "mu"
                       "droste"
                       "skeuomorph"
-                      "compendium"}
+                      "compendium"
+                      "mu-haskell"}
  :extra-repos [{:user "scala-exercises" :repo "scala-exercises"}
                {:user "frees-io" :repo "freestyle"},
                {:user "frees-io" :repo "iota"},
@@ -40,7 +41,8 @@
                {:user "higherkindness" :repo "mu"}
                {:user "higherkindness" :repo "droste"}
                {:user "higherkindness" :repo "skeuomorph"}
-               {:user "higherkindness" :repo "compendium"}]
+               {:user "higherkindness" :repo "compendium"}
+               {:user "higherkindness" :repo "mu-haskell"}]
  :project-logos {"fetch" "//47deg.github.io/fetch/img/navbar_brand.png"
                  "mvessel" "//47deg.github.io/mvessel/img/navbar_brand.png"
                  "github4s" "//47deg.github.io/github4s/img/navbar_brand.png"
@@ -57,6 +59,7 @@
                  "arrow" "img/navbar_arrow.png"
                  "bow" "img/bow-logo.png"
                  "mu" "img/mu_scala-logo.png"
+                 "mu-haskell" "img/mu_scala-logo.png"
                  "droste" "img/droste-logo.png"}
  :token-name "GITHUB_API_KEY"
  :analytics "UA-18433785-13"
