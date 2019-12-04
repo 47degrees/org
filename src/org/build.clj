@@ -1,13 +1,12 @@
 (ns org.build
   (:require
+   [org.config]
    [clojure.spec.alpha :as s]
-   [org.config :as cfg]
    [org.state :as st]
    [org.core :as org]
    [org.client :as c]
    [cljs.build.api :as cljs]
    [cuerdas.core :as str]
-   [cuerdas.regexp :as regexp]
    [clojure.java.io :as io]
    [clojure.java.shell :refer [sh]]
    [rum.core :as rum]))

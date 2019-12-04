@@ -6,7 +6,6 @@
    [urania.core :as u]
    [cuerdas.core :as str]
    [promesa.core :as p]
-   [org.json :as json]
    #? (:clj
        [httpurr.client.aleph :refer [client]]
        :cljs
