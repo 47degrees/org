@@ -1,6 +1,5 @@
 (ns org.server
   (:require
-   [cuerdas.core :as str]
    [org.build :as b]))
 
 (defn handler

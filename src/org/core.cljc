@@ -4,9 +4,13 @@
    [cuerdas.core :as str]
    [clojure.set :as set]))
 
+
 (defn repos-by-config
-  [repos {:keys [included-projects]}]
-  (filter #(contains? included-projects (:name %)) repos))
+  [repos {:keys [included-projects archived-projects]}]
+  (sequence (comp
+              (remove #(contains? archived-projects (:name %)))
+              (filter #(contains? included-projects (:name %))))
+            repos))
 
 (defn parens
   [x]
@@ -53,22 +57,22 @@
         is-visible? @visible?
         toggle-visibility (fn [ev]
                             (.preventDefault ev)
-                            (swap! visible? not))]
-    (let [menu (if is-visible?
+                            (swap! visible? not))
+        menu (if is-visible?
                  :div.menu.is-visible
                  :div.menu)
-          fade (if is-visible?
-                 :div.menu-panel-fade-screen.is-visible
-                 :div.menu-panel-fade-screen)]
-      [:nav
-       [:div.brand
-        [:a {:href href}
-         [:img {:src src :style style}]]]
-       [:div.panel-button
-        [:span.octicon.octicon-three-bars.menu-panel-button {:on-click toggle-visibility}]]
-       [menu
-        (link-list links)]
-       [fade {:on-click toggle-visibility}]])))
+        fade (if is-visible?
+               :div.menu-panel-fade-screen.is-visible
+               :div.menu-panel-fade-screen)]
+    [:nav
+     [:div.brand
+      [:a {:href href}
+       [:img {:src src :style style}]]]
+     [:div.panel-button
+      [:span.octicon.octicon-three-bars.menu-panel-button {:on-click toggle-visibility}]]
+     [menu
+      (link-list links)]
+     [fade {:on-click toggle-visibility}]]))
 
 (rum/defc stats
   [repos]
@@ -216,7 +220,6 @@
     [:div.search
      [:input
       {:type "text"
-       :name "nombre"
        :placeholder "Search a project"
        :on-change (fn [ev]
                     (swap! state assoc :query (.-value (.-target ev))))}]]))
