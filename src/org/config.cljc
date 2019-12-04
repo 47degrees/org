@@ -41,6 +41,8 @@
 (s/def :org/included-projects (s/coll-of :org/project
                                          :kind set?
                                          :min-count 1))
+(s/def :org/archived-projects (s/coll-of :org/project
+                                         :kind set?))
 
 (s/def :repo/user string?)
 (s/def :repo/repo string?)
@@ -99,6 +101,7 @@
                                     :org/links
                                     :org/languages
                                     :org/included-projects
+                                    :org/archived-projects
                                     :org/token-name
                                     :org/style]
                            :opt-un [:org/organization-name

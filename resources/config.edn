@@ -33,6 +33,7 @@
                       "skeuomorph"
                       "compendium"
                       "mu-haskell"}
+ :archived-projects #{"LambdaTest"}
  :extra-repos [{:user "scala-exercises" :repo "scala-exercises"}
                {:user "frees-io" :repo "freestyle"},
                {:user "frees-io" :repo "iota"},

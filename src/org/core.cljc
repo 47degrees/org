@@ -4,9 +4,13 @@
    [cuerdas.core :as str]
    [clojure.set :as set]))
 
+
 (defn repos-by-config
-  [repos {:keys [included-projects]}]
-  (filter #(contains? included-projects (:name %)) repos))
+  [repos {:keys [included-projects archived-projects]}]
+  (sequence (comp
+              (remove #(contains? archived-projects (:name %)))
+              (filter #(contains? included-projects (:name %))))
+            repos))
 
 (defn parens
   [x]
