@@ -48,7 +48,7 @@
                {:user "higherkindness" :repo "skeuomorph"}
                {:user "higherkindness" :repo "compendium"}
                {:user "higherkindness" :repo "mu-haskell"}]
- :project-logos {"fetch" "//47deg.github.io/fetch/img/navbar_brand.png"
+ :project-logos {"fetch" "//47degrees.github.io/fetch/img/navbar_brand.png"
                  "mvessel" "//47deg.github.io/mvessel/img/navbar_brand.png"
                  "github4s" "//47deg.github.io/github4s/img/navbar_brand.png"
                  "scala-exercises" "img/scala-exercises-dark.png"
