@@ -10,4 +10,4 @@ git checkout master
 lein run
 git add docs
 git commit -m "[skip ci] Generate site"
-git push https://47deg:$GITHUB_API_KEY@github.com/47deg/org master
+git push https://47degrees:$GITHUB_API_KEY@github.com/47degrees/org master
