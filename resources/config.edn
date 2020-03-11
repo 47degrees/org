@@ -1,73 +1,81 @@
-{:organization "47deg"
+{:organization "47degrees"
  :organization-name "47 Degrees"
- :logo {:href "http://47deg.com"
+ :logo {:href "https://www.47deg.com"
         :src "img/nav-brand.png"}
- :links [{:text "Blog" :href "http://47deg.com/blog"}
-         {:text "Talks" :href "http://47deg.com/presentations"}
-         {:text "Contact" :href "http://47deg.com/contact"}]
+ :links [{:text "Blog" :href "https://www.47deg.com/blog"}
+         {:text "Talks" :href "https://www.47deg.com/presentations"}
+         {:text "Contact" :href "https://www.47deg.com/contact"}]
  :social {:twitter "47deg"
           :facebook "47degreesLLC"
           :linkedin "company/47-degrees-llc"}
  :languages #{"Scala" "Clojure" "Java" "Swift" "Kotlin" "Haskell"}
- :included-projects #{"macroid"
-                      "fetch"
-                      "sbt-microsites"
-                      "scalacheck-toolbox"
-                      "scala-exercises"
-                      "github4s"
-                      "org"
-                      "sbt-org-policies"
-                      "sbot"
-                      "freestyle"
-                      "mvessel"
-                      "case-classy"
-                      "second-bridge"
-                      "nine-cards-v2"
-                      "nine-cards-backend"
-                      "LambdaTest"
-                      "iota"
+ :included-projects #{
                       "arrow"
                       "bow"
-                      "mu"
-                      "droste"
-                      "skeuomorph"
+                      "bow-openapi"
+                      "case-classy"
                       "compendium"
+                      "droste"
+                      "fetch"
+                      "freestyle"
+                      "github4s"
+                      "iota"
+                      "LambdaTest"
+                      "macroid"
+                      "mu-scala"
                       "mu-haskell"
+                      "mvessel"
                       "nef"
-                      "bow-openapi"}
- :archived-projects #{"LambdaTest"}
- :extra-repos [{:user "scala-exercises" :repo "scala-exercises"}
-               {:user "frees-io" :repo "freestyle"},
-               {:user "frees-io" :repo "iota"},
-               {:user "arrow-kt" :repo "arrow"}
-               {:user "bow-swift" :repo "bow"}
-               {:user "bow-swift" :repo "nef"}
-               {:user "bow-swift" :repo "bow-openapi"}
-               {:user "higherkindness" :repo "mu"}
-               {:user "higherkindness" :repo "droste"}
-               {:user "higherkindness" :repo "skeuomorph"}
-               {:user "higherkindness" :repo "compendium"}
-               {:user "higherkindness" :repo "mu-haskell"}]
- :project-logos {"fetch" "//47degrees.github.io/fetch/img/navbar_brand.png"
-                 "mvessel" "//47deg.github.io/mvessel/img/navbar_brand.png"
-                 "github4s" "//47deg.github.io/github4s/img/navbar_brand.png"
-                 "scala-exercises" "img/scala-exercises-dark.png"
-                 "scalacheck-toolbox" "//47deg.github.io/scalacheck-toolbox/img/navbar_brand.png"
-                 "macroid" "//47deg.github.io/macroid/img/navbar_brand.png"
-                 "sbt-microsites" "//47deg.github.io/sbt-microsites/img/navbar_brand.png"
-                 "second-bridge" "img/second_bridge-logo.png"
-                 "freestyle" "img/navbar_freestyle.png"
-                 "LambdaTest" "//47deg.github.io/LambdaTest/img/navbar_brand.png"
-                 "nine-cards-v2" "img/navbar_nine-cards.png"
-                 "nine-cards-backend" "img/navbar_nine-cards.png"
-                 "case-classy" "img/case_classy-logo.png"
+                      "nine-cards-backend"
+                      "nine-cards-v2"
+                      "org"
+                      "sbot"
+                      "sbt-microsites"
+                      "sbt-org-policies"
+                      "scala-exercises"
+                      "scalacheck-toolbox"
+                      "second-bridge"
+                      "skeuomorph"
+                    }
+ :archived-projects #{
+                      "LambdaTest"
+                    }
+ :extra-repos [
+                   {:user "arrow-kt" :repo "arrow"}
+                   {:user "bow-swift" :repo "bow"}
+                   {:user "bow-swift" :repo "bow-openapi"}
+                   {:user "bow-swift" :repo "nef"}
+                   {:user "frees-io" :repo "freestyle"}
+                   {:user "frees-io" :repo "iota"}
+                   {:user "higherkindness" :repo "compendium"}
+                   {:user "higherkindness" :repo "droste"}
+                   {:user "higherkindness" :repo "mu-haskell"}
+                   {:user "higherkindness" :repo "mu-scala"}
+                   {:user "higherkindness" :repo "skeuomorph"}
+                   {:user "scala-exercises" :repo "scala-exercises"}
+               ]
+ :project-logos {
                  "arrow" "img/navbar_arrow.png"
                  "bow" "img/bow-logo.png"
-                 "mu" "img/mu_scala-logo.png"
-                 "mu-haskell" "img/mu_scala-logo.png"
+                 "bow-openapi" "img/bow-openapi-logo.png"
+                 "case-classy" "img/case_classy-logo.png"
                  "droste" "img/droste-logo.png"
+                 "fetch" "//47degrees.github.io/fetch/img/favicon.png"
+                 "freestyle" "img/navbar_freestyle.png"
+                 "github4s" "//47deg.github.io/github4s/img/navbar_brand.png"
+                 "LambdaTest" "//47deg.github.io/LambdaTest/img/navbar_brand.png"
+                 "macroid" "//47deg.github.io/macroid/img/navbar_brand.png"
+                 "mu-haskell" "img/mu_scala-logo.png"
+                 "mu-scala" "img/mu_scala-logo.png"
+                 "mvessel" "//47deg.github.io/mvessel/img/navbar_brand.png"
                  "nef" "img/nef-logo.png"
-                 "bow-openapi" "img/bow-openapi-logo.png"}
+                 "nine-cards-backend" "img/navbar_nine-cards.png"
+                 "nine-cards-v2" "img/navbar_nine-cards.png"
+                 "sbt-microsites" "//47degrees.github.io/sbt-microsites/img/navbar_brand.png"
+                 "scala-exercises" "img/scala-exercises-dark.png"
+                 "scalacheck-toolbox" "//47degrees.github.io/scalacheck-toolbox/img/navbar_brand.png"
+                 "second-bridge" "img/second_bridge-logo.png"
+               }
  :token-name "GITHUB_API_KEY"
  :analytics "UA-18433785-13"
  :style {:primary-color "#F44336"
