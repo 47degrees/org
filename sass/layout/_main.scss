@@ -140,8 +140,11 @@
 			}
 			p {
 				overflow: hidden;
-				white-space: nowrap;
 				text-overflow: ellipsis;
+				min-height: 3rem;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
 			}
 			ul {
 				margin-top: 24px;

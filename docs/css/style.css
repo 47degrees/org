@@ -385,8 +385,11 @@ select {
       margin: 10px 0 5px 0; }
     #site-main .project-list .project-info p {
       overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis; }
+      text-overflow: ellipsis;
+      min-height: 3rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical; }
     #site-main .project-list .project-info ul {
       margin-top: 24px;
       display: -webkit-box;

@@ -300,11 +300,11 @@
    [:div.wrapper
     [:div.navigation
      (link-list links)
-     (let [year 2016
+     (let [year 2020
            org (or organization-name organization)]
        [:p
-        (str "Copyright " year " " org " - Built with ")
-        [:a {:href "http://github.com/47deg/org"} "org"]
+        (str "Copyright ©" year " " org " - Built with ")
+        [:a {:href "http://github.com/47degrees/org"} "org"]
         (when (get footer :acknowledgment true)
           [:span
            " by "
