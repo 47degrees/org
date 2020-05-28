@@ -17,7 +17,7 @@ First and foremost, ensure you have [Leiningen](http://leiningen.org) and [Sass]
 Clone this repository to a local directory (`my-org` in our example):
 
 ```sh
-$ git clone https://github.com/47deg/org.git my-org
+$ git clone https://github.com/47degrees/org.git my-org
 $ cd my-org
 ```
 
@@ -38,14 +38,14 @@ $ git push -u origin raw
 
 ### Edit the configuration
 
-For creating your own site you simple have to provide a configuration file under `resources/config.edn`. The file uses [edn syntax](https://github.com/edn-format/edn)
-and its pretty straightforward, here is an example with the defaults:
+For creating your own site you have to provide a configuration file under `resources/config.edn`. The file uses [edn syntax](https://github.com/edn-format/edn)
+and it's pretty straightforward. Here is an example:
 
 ```clojure
-{:organization "47deg"
+{:organization "47degrees"
  :logo {:src "img/logo.png"
         :href "http://47deg.com"}
- :links [{:text "Blog" :href "http://47deg.com/blog"}
+ :links [{:text "Blog" :href "https://www.47deg.com/blog"}
          {:text "Contact" :href "mailto:hello@47deg.com"}]
  :social {:twitter "47deg"
           :facebook "47degreesLLC"}
@@ -62,10 +62,25 @@ and its pretty straightforward, here is an example with the defaults:
                       "mvessel"
                       "case-classy"
                       "second-bridge"}
- :project-logos {"fetch" "https://rawgit.com/47deg/microsites/cdn//fetch/navbar_brand.png"
-                 "mvessel" "https://rawgit.com/47deg/microsites/cdn//mvessel/navbar_brand.png"
-                 "github4s" "https://rawgit.com/47deg/microsites/cdn//github4s/navbar_brand.png"
-                 "scalacheck-datetime" "https://rawgit.com/47deg/microsites/cdn//scalacheck-datetime/navbar_brand.png"}
+ :archived-projects #{
+                      "LambdaTest"
+                    }
+ :extra-repos [
+                   {:user "arrow-kt" :repo "arrow"}
+                   {:user "bow-swift" :repo "bow"}
+                   {:user "bow-swift" :repo "bow-openapi"}
+                   {:user "bow-swift" :repo "nef"}
+                   {:user "frees-io" :repo "freestyle"}
+                   {:user "frees-io" :repo "iota"}
+                   {:user "higherkindness" :repo "compendium"}
+                   {:user "higherkindness" :repo "droste"}
+                   {:user "higherkindness" :repo "mu-haskell"}
+                   {:user "higherkindness" :repo "mu-scala"}
+                   {:user "higherkindness" :repo "skeuomorph"}
+                   {:user "scala-exercises" :repo "scala-exercises"}
+               ]
+ :project-logos {"sbt-microsites" "//47degrees.github.io/sbt-microsites/img/navbar_brand.png"
+                 "github4s" "//47deg.github.io/github4s/img/navbar_brand.png"}
  :token-name "an-env-variable-with-a-github-api-key"
  :analytics "a-google-analytics-token"
  :footer {:acknowledgment true}
@@ -84,7 +99,7 @@ Let's break it down:
 
 - `:organization` is the name of your org in GitHub
 - `:organization-name` is the human-readable name of your org. `:organization` will be used if not provided.
-- `:logo` is a map with the source URL (`:src`) of your org logo and where it should link to (`:href`), optionally with 
+- `:logo` is a map with the source URL (`:src`) of your org logo and where it should link to (`:href`), optionally with
    the styles for the `img` tag (`:style`)
 - `:links` is a vector with maps that containt link text (`:text`) and href (`:href`)
 - `:social` is a map for specifying the handles in different social networks
@@ -93,6 +108,7 @@ Let's break it down:
  + `:linkedin` contains your LinkedIn handle
 - `:languages` is the set with the languages you are interested in filtering by
 - `:included-projects` is the set with the projects you are interested in having on the site
+- `:archived-projects` is a set of projects that will be hidden, but their stars will be included in the total star count
 - `:extra-repos` allows you to add extra repos out of the org (maps with `:user` and `:repo`)
 - `:project-logos` is a map from project names to the URL where their logo can be found, libraries without logos will show a placeholder
 - `:token-name` is a string with the name of an environment variable containing a GitHub token required to use the GitHub API
@@ -103,7 +119,7 @@ Let's break it down:
 - `:footer` is for settings related to the footer
  + `:acknowledgment` is a boolean flag for toggling the "by 47 Degrees" acknowledgment in the footer
 - `:analytics` is an optional string containing a Google analytics token
- 
+
 ### Preview your site
 
 After editing the configuration, you can preview the site by running
@@ -121,7 +137,7 @@ You can create the static site under the `docs` directory by running:
 ```sh
 $ lein run
 ```
-	
+
 Congratulations, you just built your organization's open source project site!
 
 #### SASS compilation
